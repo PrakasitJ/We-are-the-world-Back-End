@@ -2,24 +2,29 @@ import { Elysia, t } from "elysia";
 import UserRepository from "../repositories/UserRepository";
 import { User } from "@prisma/client";
 
-const userController = new Elysia({
+const UserController = new Elysia({
   prefix: "/api/user", // Define prefix for all routes in this controller
   tags: ["User"], // Define tags for all routes in this controller
 });
 
-userController.model({
+UserController.model({
   User: t.Object({
     // Define User model
-    id: t.Number(),
+    uuid: t.String(),
+    location_id: t.Integer(),
     username: t.String(),
     email: t.String(),
     password: t.String(),
+    salt: t.String(),
+    name: t.String(),
+    surname: t.String(),
+    tel: t.String(),
     createdAt: t.Date(),
     updatedAt: t.Date(),
   }),
 });
 
-userController.get(
+UserController.get(
   // Define GET route
   "/:id",
   async ({ params: { id } }) => {
@@ -28,7 +33,7 @@ userController.get(
     return user ?? { error: "User not found", status: 200 }; // Return user or error
   },
   {
-    params: t.Object({ id: t.Number() }), // Define id parameter
+    params: t.Object({ id: t.String() }), // Define id parameter
     detail: {
       summary: "Get User By Id", // API Name for documentation
       description: "Get user by id from database", // API Description for documentation
@@ -36,7 +41,7 @@ userController.get(
   }
 );
 
-userController.get(
+UserController.get(
   // Define GET route
   "/all",
   async () => {
@@ -52,7 +57,7 @@ userController.get(
   }
 );
 
-userController.post(
+UserController.post(
   // Define POST route
   "/create",
   async ({ body, set }) => {
@@ -61,7 +66,9 @@ userController.post(
 
     try {
       // Try to create user
-      const user: User = await userRepository.createUser(body); // Create user
+      body.salt === undefined ? body.salt = Math.random().toString(36).substring(2, 12) : ""; // Generate random
+      const newBody = { ...body, salt: body.salt };
+      const user: User = await userRepository.createUser(newBody); // Create user
       return user; // Return user
     } catch (error: any) {
       // Catch error
@@ -75,27 +82,27 @@ userController.post(
       username: t.String({
         // Define username parameter
         minLength: 2,
-        maxLength: 12,
+        maxLength: 30,
         format: "hostname",
         error: {
           minLength: "Username should have at least 2 characters",
-          maxLength: "Username should have at most 12 characters",
-          format: "Username should have no whitespace and have 2-12 characters",
+          maxLength: "Username should have at most 30 characters",
+          format: "Username should have no whitespace and have 2-30 characters",
         },
         description:
-          "Username should have no whitespace and have 2-12 characters",
+          "Username should have no whitespace and have 2-30 characters",
       }),
       email: t.String({
         // Define email parameter
         minLength: 5,
-        maxLength: 30,
+        maxLength: 20,
         format: "email",
         error: {
           minLength: "Email should have at least 5 characters",
-          maxLength: "Email should have at most 30 characters",
-          format: "Email should be in email form and have 5-30 characters",
+          maxLength: "Email should have at most 20 characters",
+          format: "Email should be in email form and have 5-20 characters",
         },
-        description: "Email should be in email form and have 5-30 characters",
+        description: "Email should be in email form and have 5-20 characters",
       }),
       password: t.String({
         // Define password parameter
@@ -112,6 +119,58 @@ userController.post(
         description:
           "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
       }),
+      name: t.String({
+        // Define name parameter
+        minLength: 2,
+        maxLength: 15,
+        pattern: "^[a-zA-Z]*$",
+        error: {
+          minLength: "Name should have at least 2 characters",
+          maxLength: "Name should have at most 15 characters",
+        },
+        description:
+          "Name should have at least 2 characters and at most 15 characters",
+      }),
+      surname: t.String({
+        // Define surname parameter
+        minLength: 2,
+        maxLength: 15,
+        pattern: "^[a-zA-Z]*$",
+        error: {
+          minLength: "Surname should have at least 2 characters",
+          maxLength: "Surname should have at most 15 characters",
+        },
+        description:
+          "Surname should have at least 2 characters and at most 15 characters",
+      }),
+      tel: t.String({
+        // Define tel parameter
+        minLength: 10,
+        maxLength: 10,
+        pattern: "^[0-9]*$",
+        error: {
+          minLength: "Tel should have 10 characters",
+          maxLength: "Tel should have 10 characters",
+        },
+        description: "Tel should have 10 characters",
+      }),
+      location_id: t.Integer({
+        minimum: 1,
+        error: { minimum: "Location id should be at least 1" },
+        description: "Location id should be at least 1",
+      }),
+      salt: t.Optional(
+        t.String({
+          minLength: 10,
+          maxLength: 10,
+          error: {
+            minLength: "Salt should have at least 10 characters",
+            maxLength: "Salt should have at most 10 characters",
+          },
+          description:
+            "Salt should have at least 10 characters and at most 10 characters",
+        })
+      ),
     }),
     detail: {
       summary: "Create User", // API Name for documentation
@@ -121,10 +180,10 @@ userController.post(
 );
 
 // You can define more routes here
-// userController.get(...)
-// userController.post(...)
-// userController.put(...)
-// userController.patch(...)
-// userController.delete(...)
+// UserController.get(...)
+// UserController.post(...)
+// UserController.put(...)
+// UserController.patch(...)
+// UserController.delete(...)
 
-export default userController; // Export userController for use in other files
+export default UserController; // Export UserController for use in other files

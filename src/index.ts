@@ -1,7 +1,8 @@
 import { Elysia, redirect } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { cors } from "@elysiajs/cors";
-import userController from "./controllers/UserController";
+import UserController from "./controllers/UserController";
+import LocationController from "./controllers/LocationController";
 
 //This is the main app
 const app = new Elysia();
@@ -21,13 +22,15 @@ app.use(
       tags: [
         { name: "Home", description: "Home related endpoints" },
         { name: "User", description: "User related endpoints" },
+        { name: "Location", description: "Location related endpoints" },
       ],
     },
     path: "/api/docs",
   })
 );
 
-app.use(userController); // Use userController in app
+app.use(UserController); // Use userController in app
+app.use(LocationController); // Use LocationController in app
 // app.use(anotherController);
 // if you have more controllers, you can use them here
 

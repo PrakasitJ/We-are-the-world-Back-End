@@ -1,0 +1,15 @@
+model Product {
+    id        Int      @id @default(autoincrement())
+    name      String
+    image_url String
+    price     Float    @db.DoublePrecision
+    amount    Int
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    Shop    Shop @relation(fields: [shop_id], references: [id])
+    shop_id Int
+
+    Product_list   Product_list[]
+    Product_filter Product_filter[]
+}

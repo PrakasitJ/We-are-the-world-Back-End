@@ -1,0 +1,19 @@
+model Transaction {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    order    Order @relation(fields: [order_id], references: [id])
+    order_id Int 
+
+    payer    User @relation(fields: [payer_id], references: [uuid])
+    payer_id String @db.Uuid
+
+    shop    Shop @relation(fields: [shop_id], references: [id])
+    shop_id Int 
+
+    rider    Rider @relation(fields: [rider_id], references: [id])
+    rider_id Int 
+
+    @@unique([order_id, payer_id, shop_id, rider_id])
+}

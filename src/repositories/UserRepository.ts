@@ -6,10 +6,10 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 //This class will handle all the database operations related to the User model.
 //If you want to get other data from the database, you can create a new repository class.
 class UserRepository {
-  public async getUserById(id: number): Promise<User | null> {
+  public async getUserById(uuid: string): Promise<User | null> {
     //Make Request to Database and return User
     return await db.user.findUnique({
-      where: { id },
+      where: { uuid: uuid },
     });
   }
 
@@ -19,21 +19,36 @@ class UserRepository {
   }
 
   public async createUser({
+    location_id,
     username,
     email,
     password,
+    name,
+    surname,
+    tel,
+    salt,
   }: {
+    location_id: number;
     username: string;
     email: string;
     password: string;
+    name: string;
+    surname: string;
+    tel: string;
+    salt: string;
   }): Promise<User> {
     try {
       //Make Request to Database and return User
       const response = await db.user.create({
         data: {
+          location_id: location_id,
           username: username,
           email: email,
           password: password,
+          name: name,
+          surname: surname,
+          tel: tel,
+          salt: salt,
         },
       });
       return response;

@@ -1,0 +1,28 @@
+model Order {
+    id          Int         @id @default(autoincrement())
+    service_fee Float       @db.DoublePrecision
+    status      OrderStatus @default(PENDING)
+    note        String      @db.VarChar(500)
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+
+    charity    Charity @relation(fields: [charity_id], references: [id])
+    charity_id Int     @unique
+
+    user        User   @relation(fields: [customer_id], references: [uuid])
+    customer_id String @unique  @db.Uuid
+
+    shop    Shop @relation(fields: [shop_id], references: [id])
+    shop_id Int
+
+    Product_list Product_list[]
+    Transaction  Transaction[]
+}
+
+enum OrderStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+    CANCELLED
+    COMPLETED
+}
