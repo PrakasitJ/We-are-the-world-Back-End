@@ -1,6 +1,7 @@
 import { Elysia, t } from "elysia";
 import UserRepository from "../repositories/UserRepository";
 import { User } from "@prisma/client";
+import { password } from "bun";
 
 const UserController = new Elysia({
   prefix: "/api/user", // Define prefix for all routes in this controller
@@ -68,6 +69,8 @@ UserController.post(
       // Try to create user
       body.salt === undefined ? body.salt = Math.random().toString(36).substring(2, 12) : ""; // Generate random
       const newBody = { ...body, salt: body.salt };
+      const password =  await Bun.password.hash(newBody.password + newBody.salt, 'bcrypt'); // Hash password
+      newBody.password = password; // Set password
       const user: User = await userRepository.createUser(newBody); // Create user
       return user; // Return user
     } catch (error: any) {
