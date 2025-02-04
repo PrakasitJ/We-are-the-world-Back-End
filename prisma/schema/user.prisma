@@ -15,7 +15,7 @@ model User {
 
   Shop        Shop?
   Charity     Charity?
-  Order       Order?
   Rider       Rider?
+  Order       Order[]
   Transaction Transaction[]
 }

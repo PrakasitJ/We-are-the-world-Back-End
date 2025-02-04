@@ -10,7 +10,7 @@ model Order {
     charity_id Int     @unique
 
     user        User   @relation(fields: [customer_id], references: [uuid])
-    customer_id String @unique  @db.Uuid
+    customer_id String @db.Uuid
 
     shop    Shop @relation(fields: [shop_id], references: [id])
     shop_id Int
