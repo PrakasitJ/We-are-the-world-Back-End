@@ -7,7 +7,7 @@ model Rider {
     user_id String @unique @db.Uuid 
 
     vehicle_type    Vehicle_type    @relation(fields: [vehicle_type_id], references: [id])
-    vehicle_type_id Int             @unique
+    vehicle_type_id Int    
     Rider_location  Rider_location?
     Transaction     Transaction[]
 }

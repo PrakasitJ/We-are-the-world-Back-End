@@ -4,6 +4,6 @@ model Vehicle_type {
     vehicle_type String   @db.VarChar(15)
     createdAt    DateTime @default(now())
     updatedAt    DateTime @updatedAt
-    
-    Rider        Rider?
+
+    Rider Rider[]
 }
