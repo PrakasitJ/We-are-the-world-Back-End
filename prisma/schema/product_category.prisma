@@ -1,0 +1,9 @@
+model Product_category {
+    id            Int      @id @default(autoincrement())
+    shop_id       Int
+    category_name String   @db.VarChar(30)
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+
+    Product Product[]
+}

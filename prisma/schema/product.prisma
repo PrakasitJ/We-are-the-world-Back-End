@@ -1,16 +1,18 @@
 model Product {
-    id          Int           @id @default(autoincrement())
-    shop_id     Int
-    name        String        @db.VarChar(20)
-    image_url   String
-    price       Int
-    amount      Int
-    description String        @db.VarChar(50)
-    status      ProductStatus @default(AVAILABLE)
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
+    id                  Int           @id @default(autoincrement())
+    shop_id             Int
+    product_category_id Int
+    name                String        @db.VarChar(20)
+    image_url           String
+    price               Int
+    amount              Int
+    description         String        @db.VarChar(50)
+    status              ProductStatus @default(AVAILABLE)
+    createdAt           DateTime      @default(now())
+    updatedAt           DateTime      @updatedAt
 
-    shop Shop @relation(fields: [shop_id], references: [id])
+    shop             Shop             @relation(fields: [shop_id], references: [id])
+    product_category Product_category @relation(fields: [product_category_id], references: [id])
 
     Product_filter Product_filter[]
     Product_list   Product_list[]
