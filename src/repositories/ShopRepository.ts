@@ -1,10 +1,11 @@
-import { Bank_account, Shop, User } from "@prisma/client";
+import { Bank_account, Shop, Shop_images, User } from "@prisma/client";
 import db from "./Database";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 interface ShopWithDetail extends Partial<Shop> {
   user: Partial<User> | null;
   bank_account: Partial<Bank_account> | null;
+  shop_images: Shop_images[] | null;
 }
 
 class ShopRepository {
@@ -38,6 +39,7 @@ class ShopRepository {
             account_holder_name: true,
           },
         },
+        Shop_images: true,
       },
     });
   }
@@ -86,6 +88,22 @@ class ShopRepository {
       //Handle Unknown Error
       throw new Error("Internal Server Error");
     }
+  }
+
+  public async addShopImage({
+    shop_id,
+    image_url,
+  }: {
+    shop_id: number;
+    image_url: string;
+  }): Promise<Shop_images | null> {
+    //Make Request to Database and return Shop
+    return await db.shop_images.create({
+      data: {
+        shop_id: shop_id,
+        image_url: image_url,
+      },
+    });
   }
 
   public async updateShop({

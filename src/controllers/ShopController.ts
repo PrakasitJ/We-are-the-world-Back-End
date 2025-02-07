@@ -85,6 +85,25 @@ ShopController.post(
   }
 );
 
+ShopController.post(
+  "/addShopImage",
+  async ({ body: { shop_id, image_url } }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.addShopImage({ shop_id, image_url });
+    return shop;
+  },
+  {
+    body: t.Object({
+      shop_id: t.Number(),
+      image_url: t.String(),
+    }),
+    detail: {
+      summary: "Add Shop Image",
+      description: "Add Shop Image in database",
+    },
+  }
+);
+
 ShopController.put(
   "/update",
   async ({ body }) => {
