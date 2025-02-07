@@ -19,7 +19,6 @@ class UserRepository {
   }
 
   public async createUser({
-    location_id,
     username,
     email,
     password,
@@ -28,7 +27,6 @@ class UserRepository {
     tel,
     salt,
   }: {
-    location_id: number;
     username: string;
     email: string;
     password: string;
@@ -41,7 +39,6 @@ class UserRepository {
       //Make Request to Database and return User
       const response = await db.user.create({
         data: {
-          location_id: location_id,
           username: username,
           email: email,
           password: password,

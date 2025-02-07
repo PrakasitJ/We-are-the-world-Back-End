@@ -1,0 +1,9 @@
+model Charity_images {
+    id         Int      @id @default(autoincrement())
+    charity_id Int
+    image_url  String
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    charity Charity @relation(fields: [charity_id], references: [id])
+}

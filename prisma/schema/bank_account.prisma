@@ -1,0 +1,11 @@
+model Bank_account {
+    id                  Int      @id @default(autoincrement())
+    bank_name           String   @db.VarChar(20)
+    bank_account_number String   @db.VarChar(18)
+    account_holder_name String   @db.VarChar(50)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
+
+    Shop  Shop?
+    Rider Rider?
+}

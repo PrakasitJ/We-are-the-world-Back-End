@@ -1,19 +1,24 @@
 model Transaction {
     id        Int      @id @default(autoincrement())
+    order_id  Int @unique
+    payer_id  String @db.Uuid
+    shop_id   Int
+    charity_id Int?
+    rider_id  Int
+    status    String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    order    Order @relation(fields: [order_id], references: [id])
-    order_id Int 
+    Order Order @relation(fields: [order_id], references: [id])
+    payer User  @relation(fields: [payer_id], references: [uuid])
+    Shop  Shop  @relation(fields: [shop_id], references: [id])
+    Rider  Rider @relation(fields: [rider_id], references: [id])
+    Charity Charity? @relation(fields: [charity_id], references: [id])
+}
 
-    payer    User @relation(fields: [payer_id], references: [uuid])
-    payer_id String @db.Uuid
-
-    shop    Shop @relation(fields: [shop_id], references: [id])
-    shop_id Int 
-
-    rider    Rider @relation(fields: [rider_id], references: [id])
-    rider_id Int 
-
-    @@unique([order_id, payer_id, shop_id, rider_id])
+enum TransactionStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+    CANCELLED
 }

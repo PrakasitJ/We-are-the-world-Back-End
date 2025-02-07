@@ -1,0 +1,9 @@
+model Shop_images {
+    id        Int      @id @default(autoincrement())
+    shop_id   Int
+    image_url String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    shop Shop @relation(fields: [shop_id], references: [id])
+}

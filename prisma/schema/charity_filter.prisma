@@ -1,0 +1,11 @@
+model Charity_filter {
+  id          Int      @id @default(autoincrement())
+  charity_id  Int
+  filter_id   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  charity Charity @relation(fields: [charity_id], references: [id])
+  filter Filter @relation(fields: [filter_id], references: [id])
+  @@unique([charity_id, filter_id])
+}

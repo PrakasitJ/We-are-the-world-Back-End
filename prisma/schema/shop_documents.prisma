@@ -1,0 +1,17 @@
+model Shop_documents {
+    id                               Int      @id @default(autoincrement())
+    shop_id                          Int @unique
+    id_card_url                      String
+    certificate_board_url            String
+    vat_registration_certificate_url String
+    type                             ShopType     @default(INDIVIDUAL)
+    createdAt                        DateTime @default(now())
+    updatedAt                        DateTime @updatedAt
+
+    shop Shop @relation(fields: [shop_id], references: [id])
+}
+
+enum ShopType {
+    INDIVIDUAL
+    COMPANY
+}

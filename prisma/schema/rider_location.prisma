@@ -1,10 +1,10 @@
 model Rider_location {
-    id        Int      @id @default(autoincrement())
-    latitude  Float
-    longitude Float
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    rider    Rider @relation(fields: [rider_id], references: [id])
-    rider_id Int   @unique
+    id          Int      @id @default(autoincrement())
+    rider_id    Int @unique
+    latitude    Float
+    longitude   Float
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    
+    rider Rider @relation(fields: [rider_id], references: [id])
 }

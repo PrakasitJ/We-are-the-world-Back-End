@@ -67,9 +67,14 @@ UserController.post(
 
     try {
       // Try to create user
-      body.salt === undefined ? body.salt = Math.random().toString(36).substring(2, 12) : ""; // Generate random
+      body.salt === undefined
+        ? (body.salt = Math.random().toString(36).substring(2, 12))
+        : ""; // Generate random
       const newBody = { ...body, salt: body.salt };
-      const password =  await Bun.password.hash(newBody.password + newBody.salt, 'bcrypt'); // Hash password
+      const password = await Bun.password.hash(
+        newBody.password + newBody.salt,
+        "bcrypt"
+      ); // Hash password
       newBody.password = password; // Set password
       const user: User = await userRepository.createUser(newBody); // Create user
       return user; // Return user
@@ -156,11 +161,6 @@ UserController.post(
           maxLength: "Tel should have 10 characters",
         },
         description: "Tel should have 10 characters",
-      }),
-      location_id: t.Integer({
-        minimum: 1,
-        error: { minimum: "Location id should be at least 1" },
-        description: "Location id should be at least 1",
       }),
       salt: t.Optional(
         t.String({

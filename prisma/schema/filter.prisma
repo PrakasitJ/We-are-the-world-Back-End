@@ -4,6 +4,6 @@ model Filter {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
+    Charity_filter Charity_filter[]
     Product_filter Product_filter[]
-    Charity_list   Charity_list[]
 }

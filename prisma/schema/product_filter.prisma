@@ -1,12 +1,13 @@
 model Product_filter {
-    id        Int      @id @default(autoincrement())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    product    Product @relation(fields: [product_id], references: [id])
-    product_id Int
-    filter     Filter  @relation(fields: [filter_id], references: [id])
-    filter_id  Int
-
+    id          Int      @id @default(autoincrement())
+    product_id  Int
+    filter_id   Int
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    
+    product Product @relation(fields: [product_id], references: [id])
+    filter Filter @relation(fields: [filter_id], references: [id])
     @@unique([product_id, filter_id])
+
+
 }

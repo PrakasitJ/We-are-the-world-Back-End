@@ -1,28 +1,28 @@
 model Order {
-    id          Int         @id @default(autoincrement())
-    service_fee Float       @db.DoublePrecision
-    status      OrderStatus @default(PENDING)
-    note        String      @db.VarChar(500)
-    createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
+    id                   Int         @id @default(autoincrement())
+    charity_id           Int
+    customer_id          String      @db.Uuid
+    rider_id             Int
+    shop_id              Int
+    service_fee          Float
+    status               OrderStatus @default(PLACED)
+    note                 String      @db.VarChar(500)
+    finish_job_image_url String
+    created_at           DateTime    @default(now())
+    updated_at           DateTime    @updatedAt
 
-    charity    Charity @relation(fields: [charity_id], references: [id])
-    charity_id Int     @unique
-
-    user        User   @relation(fields: [customer_id], references: [uuid])
-    customer_id String @db.Uuid
-
-    shop    Shop @relation(fields: [shop_id], references: [id])
-    shop_id Int
-
+    charity      Charity        @relation(fields: [charity_id], references: [id])
+    customer     User           @relation(fields: [customer_id], references: [uuid])
+    rider        Rider          @relation(fields: [rider_id], references: [id])
+    shop         Shop           @relation(fields: [shop_id], references: [id])
     Product_list Product_list[]
-    Transaction  Transaction[]
+    Transaction  Transaction?
 }
 
 enum OrderStatus {
-    PENDING
+    PLACED
     ACCEPTED
-    REJECTED
+    PICKED_UP
+    DELIVERED
     CANCELLED
-    COMPLETED
 }

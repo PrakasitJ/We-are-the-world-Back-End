@@ -2,7 +2,6 @@ import { Elysia, redirect } from "elysia";
 import { swagger } from "@elysiajs/swagger";
 import { cors } from "@elysiajs/cors";
 import UserController from "./controllers/UserController";
-import LocationController from "./controllers/LocationController";
 import ShopController from "./controllers/ShopController";
 
 //This is the main app
@@ -23,7 +22,6 @@ app.use(
       tags: [
         { name: "Home", description: "Home related endpoints" },
         { name: "User", description: "User related endpoints" },
-        { name: "Location", description: "Location related endpoints" },
         { name: "Shop", description: "Shop related endpoints"},
       ],
     },
@@ -32,7 +30,6 @@ app.use(
 );
 
 app.use(UserController); // Use userController in app
-app.use(LocationController); // Use LocationController in app
 app.use(ShopController);
 // app.use(anotherController);
 // if you have more controllers, you can use them here
