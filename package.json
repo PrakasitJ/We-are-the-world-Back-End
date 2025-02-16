@@ -8,13 +8,13 @@
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/swagger": "^1.2.0",
-    "@prisma/client": "^6.3.0",
+    "@prisma/client": "^6.3.1",
     "elysia": "latest",
     "PM_Back": "file:"
   },
   "devDependencies": {
     "bun-types": "latest",
-    "prisma": "^6.3.0"
+    "prisma": "^6.3.1"
   },
   "module": "src/index.js"
 }
