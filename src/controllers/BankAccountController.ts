@@ -26,7 +26,7 @@ BankAccountController.get(
   async ({ params: { id } }) => {
     const bankAccountRepository = new BankAccountRepository();
     const bankAccount = await bankAccountRepository.getBankAccountById(id);
-    return bankAccount;
+    return bankAccount ?? { error: "Bank account not found", status: 200 };
   },
   {
     params: t.Object({
@@ -55,9 +55,36 @@ BankAccountController.post(
   },
   {
     body: t.Object({
-      bank_name: t.String(),
-      bank_account_number: t.String(),
-      account_holder_name: t.String(),
+      bank_name: t.String({
+        pattern: "^[a-zA-Zก-๛]*$",
+        minLength: 5,
+        maxLength: 20,
+        error: {
+          pattern: "Bank name should contain only characters",
+          minLength: "Bank name should be 5-20 characters",
+          maxLength: "Bank name should be 5-20 characters",
+        },
+      }),
+      bank_account_number: t.String({
+        pattern: "[0-9]*",
+        maxLength: 10,
+        minLength: 10,
+        error: {
+          minLength: "Bank account number must be 10 number",
+          maxLength: "Bank account number must be 10 number",
+          pattern:
+            "Bank account number should contain only numbers and must be 10 digits",
+        },
+        description: "Bank account must be number with 10 characters long",
+      }),
+      account_holder_name: t.String({
+        pattern: "^[a-zA-Z ]*$",
+        minLength: 4,
+        maxLength: 50,
+        error: {
+          pattern: "Names should contain only letters",
+        },
+      }),
       createdAt: t.Date(),
     }),
     detail: {
@@ -104,14 +131,64 @@ BankAccountController.put(
   {
     body: t.Object({
       id: t.Number(),
-      account_holder_name: t.Optional(t.String()),
-      bank_name: t.Optional(t.String()),
-      bank_account_number: t.Optional(t.String()),
+      bank_name: t.Optional(
+        t.String({
+          pattern: "^[a-zA-Zก-๛]*$",
+          minLength: 5,
+          maxLength: 20,
+          error: {
+            pattern: "Bank name should contain only characters",
+            minLength: "Bank name should be 5-20 characters",
+            maxLength: "Bank name should be 5-20 characters",
+          },
+        })
+      ),
+      bank_account_number: t.Optional(
+        t.String({
+          pattern: "[0-9]*",
+          maxLength: 10,
+          minLength: 10,
+          error: {
+            minLength: "Bank account number must be 10 number",
+            maxLength: "Bank account number must be 10 number",
+            pattern:
+              "Bank account number should contain only numbers and must be 10 digits",
+          },
+          description: "Bank account must be number with 10 characters long",
+        })
+      ),
+      account_holder_name: t.Optional(
+        t.String({
+          pattern: "^[a-zA-Z ]*$",
+          minLength: 4,
+          maxLength: 50,
+          error: {
+            pattern: "Names should contain only letters",
+          },
+        })
+      ),
       updatedAt: t.Date(),
     }),
     detail: {
       summary: "Update Bank Account",
       description: "Update a Bank Account in the database",
+    },
+  }
+);
+
+BankAccountController.delete(
+  "/delete",
+  async ({ body }) => {
+    const bankAccountRepository = new BankAccountRepository();
+    return bankAccountRepository.deleteBankAccount(body.id);
+  },
+  {
+    body: t.Object({
+      id: t.Number(),
+    }),
+    detail: {
+      summary: "Delete Bank Account",
+      description: "Delete Bank Account by Id",
     },
   }
 );
