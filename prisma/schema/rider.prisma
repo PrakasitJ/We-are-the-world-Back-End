@@ -1,16 +1,16 @@
 model Rider {
     id                   Int         @id @default(autoincrement())
     user_id              String      @unique @db.Uuid
-    vehicle_type_id      Int
-    bank_account_id      Int         @unique
+    vehicle_type_id      Int?
+    bank_account_id      Int?        @unique
     vehicle_registration String      @db.VarChar(10)
     status               RiderStatus @default(AVAILABLE)
     createdAt            DateTime    @default(now())
     updatedAt            DateTime    @updatedAt
 
-    user         User         @relation(fields: [user_id], references: [uuid])
-    vehicle_type Vehicle_type @relation(fields: [vehicle_type_id], references: [id])
-    bank_account Bank_account @relation(fields: [bank_account_id], references: [id])
+    user         User          @relation(fields: [user_id], references: [uuid])
+    vehicle_type Vehicle_type? @relation(fields: [vehicle_type_id], references: [id])
+    bank_account Bank_account? @relation(fields: [bank_account_id], references: [id])
 
     Rider_location  Rider_location?
     Rider_Documents Rider_Documents?
