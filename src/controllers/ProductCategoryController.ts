@@ -13,7 +13,7 @@ ProductCategoryController.get(
 	async () => {
 		const productCategoryRepository = new ProductCategoryRepository();
 		const Product = await productCategoryRepository.getAllProductCategories();
-		return Product;
+		return Product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		detail : {
@@ -28,7 +28,7 @@ ProductCategoryController.get(
 	async ({params : {name}}) => {
 		const productCategoryRepository = new ProductCategoryRepository();
 		const product = await productCategoryRepository.getProductCategoryByCategoryName(name);
-		return product;
+		return product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		params: t.Object({
@@ -47,7 +47,7 @@ ProductCategoryController.get(
 	async({params: {id}}) =>{
 		const productCategoryRepository = new ProductCategoryRepository();
 		const product = await productCategoryRepository.getProductCategoryById(id);
-		return product;
+		return product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		params: t.Object({
@@ -66,7 +66,7 @@ ProductCategoryController.get(
 	async({params: {id}}) =>{
 		const productCategoryRepository = new ProductCategoryRepository();
 		const product = await productCategoryRepository.getProductCategoryById(id);
-		return product;
+		return product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		params: t.Object({
