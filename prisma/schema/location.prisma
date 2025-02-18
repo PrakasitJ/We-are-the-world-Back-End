@@ -1,9 +1,11 @@
 model User_location {
-    id        Int    @id @default(autoincrement())
-    user_id   String @db.Uuid
-    latitude  Float  @default(0)
-    longitude Float  @default(0)
-    address   String @default("Please update your address") @db.VarChar(100)
+    id        Int      @id @default(autoincrement())
+    user_id   String   @db.Uuid
+    latitude  Float    @default(0)
+    longitude Float    @default(0)
+    address   String   @default("Please update your address") @db.VarChar(100)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     user User @relation(fields: [user_id], references: [uuid])
 }

@@ -39,6 +39,24 @@ BankAccountController.get(
   }
 );
 
+BankAccountController.get(
+  "/get/:id/detail",
+  async ({ params: { id } }) => {
+    const bankAccountRepository = new BankAccountRepository();
+    const bankAccount = await bankAccountRepository.getBankAccountByIdWithDetail(id);
+    return bankAccount ?? { error: "Bank account not found", status: 200 };
+  },
+  {
+    params: t.Object({
+      id: t.Number(),
+    }),
+    detail: {
+      summary: "Get Bank Account by Id with all detail",
+      description: "Get Bank Account by Id with all detail",
+    },
+  }
+);
+
 BankAccountController.post(
   "/create",
   async ({
@@ -93,30 +111,6 @@ BankAccountController.post(
     },
   }
 );
-
-// BankAccountController.put(
-//   "/update",
-//   async ({ body }) => {
-//     const bankAccountRepository = new BankAccountRepository();
-
-//     const bankAccount = await bankAccountRepository.updateHolderName({
-//       id: body.id,
-//       bank: body
-//     });
-//     return bankAccount;
-//   },
-//   {
-//     body: t.Object({
-//       id: t.Number(),
-//       account_holder_name: t.Optional(t.String()),
-//       updatedAt: t.Date(),
-//     }),
-//     detail: {
-//       summary: "Update Bank Account",
-//       description: "Update a Bank Account in database",
-//     },
-//   }
-// );
 
 BankAccountController.put(
   "/update",

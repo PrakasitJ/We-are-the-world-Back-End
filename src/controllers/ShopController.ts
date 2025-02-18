@@ -104,6 +104,25 @@ ShopController.post(
   }
 );
 
+ShopController.post(
+  "/addBankAccount",
+  async ({ body: { shop_id, bank_id } }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.addBankAccount({ shop_id, bank_id });
+    return shop;
+  },
+  {
+    body: t.Object({
+      shop_id: t.Number(),
+      bank_id: t.Number(),
+    }),
+    detail: {
+      summary: "Add Bank Account",
+      description: "Connect Bank Account and Shop",
+    },
+  }
+);
+
 ShopController.put(
   "/update",
   async ({ body }) => {

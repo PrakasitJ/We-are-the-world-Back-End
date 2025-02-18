@@ -1,15 +1,32 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import db from "./Database";
-import { Bank_account } from "@prisma/client";
+import { Bank_account, Rider, Shop } from "@prisma/client";
 
 interface BankAccountWithMessage extends Bank_account {
   message: string;
+}
+
+interface BankAccountWithDetail extends Partial<Bank_account> {
+  shop: Partial<Shop> | null;
+  rider: Partial<Rider> | null;
 }
 
 class BankAccountRepository {
   public async getBankAccountById(id: number): Promise<Bank_account | null> {
     return await db.bank_account.findUnique({
       where: { id: id },
+    });
+  }
+
+  public async getBankAccountByIdWithDetail(
+    id: number
+  ): Promise<Partial<BankAccountWithDetail> | null> {
+    return await db.bank_account.findUnique({
+      where: { id: id },
+      include: {
+        Shop: true,
+        Rider: true,
+      },
     });
   }
 
