@@ -121,29 +121,29 @@ ShopController.put(
       close_time: t.Optional(t.Date()),
     }),
     detail: {
-      summary: "Update",
+      summary: "Update Shop",
       description: "Update a new Shop in database",
     },
   }
 );
 
-// ShopController.delete(
-// 	"/delete",
-// 	async ({body :{
-// 		shop_id
-// 	}}) =>{
-// 		const shopRepository = new ShopRepository();
-// 		shopRepository.deleteShop(shop_id);
-// 	},
-// 	{
-// 		body: t.Object({
-// 			shop_id : t.Number()
-// 		}),
-// 		detail: {
-// 			summary : "Delete Shop",
-// 			description : "Detate Shop by Id"
-// 		}
-// 	},
-// )
+ShopController.delete(
+	"/delete",
+	async ({body :{
+		shop_id
+	}}) =>{
+		const shopRepository = new ShopRepository();
+		shopRepository.deleteShop(shop_id);
+	},
+	{
+		body: t.Object({
+			shop_id : t.Number()
+		}),
+		detail: {
+			summary : "Delete Shop",
+			description : "Detate Shop by Id"
+		}
+	},
+)
 
 export default ShopController;
