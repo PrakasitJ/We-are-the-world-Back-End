@@ -3,7 +3,10 @@ import { swagger } from "@elysiajs/swagger";
 import { cors } from "@elysiajs/cors";
 import UserController from "./controllers/UserController";
 import ShopController from "./controllers/ShopController";
+import ProductController from "./controllers/ProductController";
+import ProductCategoryController from "./controllers/ProductCategoryController";
 import BankAccountController from "./controllers/BankAccountController";
+import ProductListController from "./controllers/ProductListController";
 
 //This is the main app
 const app = new Elysia();
@@ -25,6 +28,9 @@ app.use(
         { name: "User", description: "User related endpoints" },
         { name: "Shop", description: "Shop related endpoints"},
         { name: "Bank Account", description: "Bank Account related endpoints"},
+        { name: "Product", description: "Product related endpoints"},
+        { name: "Product Category", description: "Product Category related endpoints"},
+        { name: "Product List", description: "Product List related endpoints"}
       ],
     },
     path: "/api/docs",
@@ -34,6 +40,9 @@ app.use(
 app.use(UserController); // Use userController in app
 app.use(ShopController);
 app.use(BankAccountController);
+app.use(ProductController);
+app.use(ProductCategoryController);
+app.use(ProductListController);
 // app.use(anotherController);
 // if you have more controllers, you can use them here
 
