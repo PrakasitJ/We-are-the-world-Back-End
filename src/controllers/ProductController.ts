@@ -2,7 +2,7 @@ import {Elysia, t  } from "elysia";
 import ProductRepository  from "../repositories/ProductRepository";
 import { Param } from "@prisma/client/runtime/library";
 import { $Enums } from "@prisma/client";
-
+//create getWithDetail
 const ProductController = new Elysia({
 	prefix: "/api/product",
 	tags: ["Product"],
@@ -14,7 +14,7 @@ ProductController.get(
 	async () => {
 		const productRepository = new ProductRepository();
 		const Product = await productRepository.getAllProducts();
-		return Product;
+		return Product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		detail : {
@@ -29,7 +29,7 @@ ProductController.get(
 	async ({params : {id}}) => {
 		const productRepository = new ProductRepository();
 		const Product = await productRepository.getProductById(id);
-		return Product;
+		return Product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		params : t.Object({
@@ -47,7 +47,7 @@ ProductController.get(
 	async ({params : {id}}) => {
 		const productRepository = new ProductRepository();
 		const Product = await productRepository.getProductByShopId(id);
-		return Product;
+		return Product?? { error: "Product not found", status: 200 };
 	},
 	{
 		params : t.Object({
@@ -65,7 +65,7 @@ ProductController.get(
 	async({params : {id}}) => {
 		const productRepository = new ProductRepository();
 		const product = await productRepository.getProductByCategoryId(id);
-		return product;
+		return product ?? { error: "Product not found", status: 200 };
 	},
 	{
 		params : t.Object({
@@ -79,7 +79,7 @@ ProductController.get(
 )
 
 ProductController.post(
-	"/create",
+	"/addProduct",
 	async ({body : {shop_id,product_category_id,name,price,amount,image_url,description}}) => {
 		const productRepository = new ProductRepository();
 		const product = await productRepository.createProduct({
