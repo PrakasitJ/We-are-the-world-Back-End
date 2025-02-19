@@ -87,7 +87,7 @@ ProductListController.put(
 	{
 		body : t.Object({
 			id : t.Number(),
-			shop_id : t.Optional(t.Number()),
+			order_id : t.Optional(t.Number()),
 			product_id : t.Optional(t.Number()),
 			quantity : t.Optional(t.Number()),
 			created_at: t.Optional(t.Date()),
