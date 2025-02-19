@@ -53,13 +53,18 @@ VehicleTypeController.post(
   {
     body: t.Object({
       vehicle_type: t.String({
-        pattern: "/^[a-zA-Z0-9\s-]+$/i",
+        pattern: "^[a-zA-Z0-9\s-]*$",
         minLength: 2,
         error: {
             pattern: "Vehicle type should contain"
         }
       }),
-      wheel: t.Number(),
+      wheel: t.Number({
+        minimum: 2,
+        error: {
+          minimum: "Wheel should more than 2"
+        }
+      }),
       createdAt: t.Date(),
     }),
     detail: {
