@@ -98,4 +98,21 @@ VehicleTypeController.put(
   }
 );
 
+VehicleTypeController.delete(
+  "/delete",
+  async ({ body }) => {
+    const vehicleTypeRepository = new VehicleTypeRepository();
+    return vehicleTypeRepository.deleteVehicleType(body.id);
+  },
+  {
+    body: t.Object({
+      id: t.Number(),
+    }),
+    detail: {
+      summary: "Delete Vehicle",
+      description: "Delete Vehicle by Id",
+    },
+  }
+);
+
 export default VehicleTypeController;
