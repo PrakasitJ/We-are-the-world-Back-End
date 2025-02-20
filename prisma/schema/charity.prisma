@@ -4,9 +4,9 @@ model Charity {
     name        String        @db.VarChar(50)
     description String        @db.VarChar(500)
     status      CharityStatus @default(CLOSE)
-    latitude    Float
-    longitude   Float
-    address     String        @db.VarChar(100)
+    latitude    Float         @default(0)
+    longitude   Float         @default(0)
+    address     String        @db.VarChar(100) @default("Please update your address")
     open_time   DateTime      @db.Time
     close_time  DateTime      @db.Time
     createdAt   DateTime      @default(now())
