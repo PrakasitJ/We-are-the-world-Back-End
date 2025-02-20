@@ -57,7 +57,7 @@ class CharityRepository {
     });
   }
 
-  public async deleteShop(id: number) {
+  public async deleteCharity(id: number) {
     //Make Request to Database and return Charity
     return await db.charity.delete({
       where: { id: id },
