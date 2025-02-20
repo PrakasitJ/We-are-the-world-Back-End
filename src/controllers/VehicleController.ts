@@ -53,23 +53,47 @@ VehicleTypeController.post(
   {
     body: t.Object({
       vehicle_type: t.String({
-        pattern: "^[a-zA-Z0-9\s-]*$",
+        pattern: "^[a-zA-Z0-9s-]*$",
         minLength: 2,
         error: {
-            pattern: "Vehicle type should contain"
-        }
+          pattern: "Vehicle type should contain",
+        },
       }),
       wheel: t.Number({
         minimum: 2,
         error: {
-          minimum: "Wheel should more than 2"
-        }
+          minimum: "Wheel should more than 2",
+        },
       }),
       createdAt: t.Date(),
     }),
     detail: {
       summary: "Create new Vehicle Type",
       description: "Create new Vehicle Type in database",
+    },
+  }
+);
+
+VehicleTypeController.put(
+  "/update",
+  async ({ body }) => {
+    const vehicleTypeRepository = new VehicleTypeRepository();
+    const vehicleType = await vehicleTypeRepository.updateVehicleType(
+      body.id,
+      body
+    );
+    return vehicleType;
+  },
+  {
+    body: t.Object({
+      id: t.Number(),
+      vehicle_type: t.Optional(t.String()),
+      wheel: t.Optional(t.Number()),
+      // updatedAt: t.Date()
+    }),
+    detail: {
+      summary: "Update Vehicle",
+      description: "Update a Vehicle in the database",
     },
   }
 );
