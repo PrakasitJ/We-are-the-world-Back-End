@@ -1,4 +1,4 @@
-import { Bank_account, Shop, Shop_images, User } from "@prisma/client";
+import { Bank_account, Product, Shop, Shop_images, User } from "@prisma/client";
 import db from "./Database";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
