@@ -2,7 +2,6 @@ import { Product } from "@prisma/client";
 import db from './Database';
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-
 class ProductRepository{
 
 	public async getAllProducts(): Promise<Product[]> {

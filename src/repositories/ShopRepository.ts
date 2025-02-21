@@ -6,6 +6,7 @@ interface ShopWithDetail extends Partial<Shop> {
   user: Partial<User> | null;
   bank_account: Partial<Bank_account> | null;
   shop_images: Shop_images[] | null;
+  product: Record<string, Product[]> | null;
 }
 
 class ShopRepository {
@@ -20,7 +21,7 @@ class ShopRepository {
     id: number
   ): Promise<Partial<ShopWithDetail> | null> {
     //Make Request to Database and return Shop
-    return await db.shop.findUnique({
+    const shop =  await db.shop.findUnique({
       where: { id: id },
       include: {
         user: {
@@ -40,8 +41,45 @@ class ShopRepository {
           },
         },
         Shop_images: true,
+        Product: {
+          select: {
+            name: true,
+            price: true,
+            amount: true,
+            description: true,
+            image_url: true,
+            product_category:{
+              select: {
+                category_name: true,
+              }
+            }
+          }
+        }
       },
     });
+
+    if (!shop)
+        return null;
+    const groupedProducts = shop.Product.reduce((acc, product) => {
+      const categoryName = product.product_category?.category_name || "Uncategorized";
+      if (!acc[categoryName]) {
+        acc[categoryName] = [];
+      }
+      acc[categoryName].push({
+        name: product.name,
+        price: product.price,
+        amount: product.amount,
+        description: product.description,
+        image_url: product.image_url,
+      });
+      return acc;
+    }, {} as Record<string, any[]>);
+
+    return {
+      ...shop,
+      product: groupedProducts,
+      Product: undefined,
+    };
   }
 
   public async getAllShops(): Promise<Shop[]> {
