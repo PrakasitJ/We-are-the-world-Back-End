@@ -1,12 +1,12 @@
 model Charity {
     id          Int           @id @default(autoincrement())
     user_id     String        @unique @db.Uuid
-    name        String        @db.VarChar(50)
+    name        String        @unique @db.VarChar(50)
     description String        @db.VarChar(500)
     status      CharityStatus @default(CLOSE)
     latitude    Float         @default(0)
     longitude   Float         @default(0)
-    address     String        @db.VarChar(100) @default("Please update your address")
+    address     String        @default("Please update your address") @db.VarChar(100)
     open_time   DateTime      @db.Time
     close_time  DateTime      @db.Time
     createdAt   DateTime      @default(now())
@@ -18,7 +18,7 @@ model Charity {
     Charity_images    Charity_images[]
     Charity_filter    Charity_filter[]
     Order             Order[]
-    Transaction       Transaction[]
+    Report            Report[]
 }
 
 enum CharityStatus {

@@ -28,13 +28,16 @@ app.use(
       tags: [
         { name: "Home", description: "Home related endpoints" },
         { name: "User", description: "User related endpoints" },
-        { name: "Shop", description: "Shop related endpoints"},
-        { name: "Charity", description: "Charity related endpoints"},
-        { name: "Bank Account", description: "Bank Account related endpoints"},
-        { name: "Product", description: "Product related endpoints"},
-        { name: "Product Category", description: "Product Category related endpoints"},
-        { name: "Product List", description: "Product List related endpoints"},
-        { name: "Vehicle Type", description: "Vehicle Type related endpoints"}
+        { name: "Shop", description: "Shop related endpoints" },
+        { name: "Charity", description: "Charity related endpoints" },
+        { name: "Bank Account", description: "Bank Account related endpoints" },
+        { name: "Product", description: "Product related endpoints" },
+        {
+          name: "Product Category",
+          description: "Product Category related endpoints",
+        },
+        { name: "Product List", description: "Product List related endpoints" },
+        { name: "Vehicle Type", description: "Vehicle Type related endpoints" },
       ],
     },
     path: "/api/docs",
@@ -52,16 +55,20 @@ app.use(VehicleTypeController);
 // app.use(anotherController);
 // if you have more controllers, you can use them here
 
-
 //This for redirect to API docs don't touch this
 app.get(
   "/",
   () => {
     return redirect("/api/docs"); // Redirect to API docs
   },
-  { detail: { tags: ["Home"], summary: "Home", description: 'Redirect to API docs'} }
+  {
+    detail: {
+      tags: ["Home"],
+      summary: "Home",
+      description: "Redirect to API docs",
+    },
+  }
 );
-
 
 //This is port for the server to run
 app.listen(3000);

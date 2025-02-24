@@ -2,14 +2,14 @@ model Rider_Documents {
     id                                    Int      @id @default(autoincrement())
     rider_id                              Int      @unique
     id_card_url                           String
+    checked_by_admind_id                  Int?
     driving_license_url                   String
-    car_insurance                         String
+    car_insurance                         String?
     criminal_history_examination_form_url String
     owner_with_vehicle_picture_url        String
     created_at                            DateTime @default(now())
     updated_at                            DateTime @updatedAt
 
-    rider Rider @relation(fields: [rider_id], references: [id])
-
-    
+    admin Admin? @relation(fields: [checked_by_admind_id], references: [id])
+    rider Rider  @relation(fields: [rider_id], references: [id])
 }

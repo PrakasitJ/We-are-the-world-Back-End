@@ -17,6 +17,7 @@ model Order {
     shop         Shop           @relation(fields: [shop_id], references: [id])
     Product_list Product_list[]
     Transaction  Transaction?
+    Report       Report[]
 }
 
 enum OrderStatus {

@@ -2,6 +2,7 @@ model Product {
     id                  Int           @id @default(autoincrement())
     shop_id             Int
     product_category_id Int
+    // Product category เป็น Optional ใน ER diagram
     name                String        @db.VarChar(20)
     image_url           String
     price               Int

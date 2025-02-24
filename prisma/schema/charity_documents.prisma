@@ -1,6 +1,7 @@
 model Charity_documents {
     id                                  Int      @id @default(autoincrement())
     charity_id                          Int      @unique
+    checked_by_admin_id                 Int?
     certificate_of_registration_url     String
     list_of_board_members_url           String
     tax_exemption_url                   String
@@ -9,4 +10,5 @@ model Charity_documents {
     updatedAt                           DateTime @updatedAt
 
     charity Charity @relation(fields: [charity_id], references: [id])
+    admin   Admin?  @relation(fields: [checked_by_admin_id], references: [id])
 }

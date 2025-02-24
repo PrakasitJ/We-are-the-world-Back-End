@@ -16,6 +16,7 @@ model Rider {
     Rider_Documents Rider_Documents?
     Order           Order[]
     Transaction     Transaction[]
+    Report          Report[]
 }
 
 enum RiderStatus {

@@ -1,0 +1,18 @@
+model Admin {
+    id        Int         @id @default(autoincrement())
+    user_id   String      @unique
+    role      AdminStatus @default(ADMIN)
+    createdAt DateTime    @default(now())
+    updatedAt DateTime    @updatedAt
+
+    user              User                @relation(fields: [user_id], references: [uuid])
+    Charity_documents Charity_documents[]
+    shop_documents    Shop_documents[]
+    rider_documents   Rider_Documents[]
+    Report            Report[]
+}
+
+enum AdminStatus {
+    HEAD_ADMIN
+    ADMIN
+}
