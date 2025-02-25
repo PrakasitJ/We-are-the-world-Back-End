@@ -5,5 +5,7 @@ model Product_category {
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
 
+    shop Shop @relation(fields: [shop_id], references: [id])
+
     Product Product[]
 }

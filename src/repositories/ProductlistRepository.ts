@@ -58,7 +58,7 @@ class ProductListRepository {
 		product_list
 	}: {
 		id: number;
-		product_list: Product_list;
+		product_list: Partial<Product_list>;
 	}): Promise<Product_list | null> {
 		return await db.product_list.update({
 			where: { id: id },

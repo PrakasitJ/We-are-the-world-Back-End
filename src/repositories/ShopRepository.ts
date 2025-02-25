@@ -21,7 +21,7 @@ class ShopRepository {
     id: number
   ): Promise<Partial<ShopWithDetail> | null> {
     //Make Request to Database and return Shop
-    const shop =  await db.shop.findUnique({
+    const shop = await db.shop.findUnique({
       where: { id: id },
       include: {
         user: {
@@ -48,20 +48,20 @@ class ShopRepository {
             amount: true,
             description: true,
             image_url: true,
-            product_category:{
+            product_category: {
               select: {
                 category_name: true,
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
     });
 
-    if (!shop)
-        return null;
+    if (!shop) return null;
     const groupedProducts = shop.Product.reduce((acc, product) => {
-      const categoryName = product.product_category?.category_name || "Uncategorized";
+      const categoryName =
+        product.product_category?.category_name || "Uncategorized";
       if (!acc[categoryName]) {
         acc[categoryName] = [];
       }
@@ -78,7 +78,6 @@ class ShopRepository {
     return {
       ...shop,
       product: groupedProducts,
-      Product: undefined,
     };
   }
 
@@ -159,6 +158,56 @@ class ShopRepository {
             id: shop_id,
           },
         },
+      },
+    });
+  }
+
+  public async addProduct({
+    shop_id,
+    category_id,
+    name,
+    price,
+    amount,
+    description,
+    image_url,
+  }: {
+    shop_id: number;
+    category_id?: number;
+    name: string;
+    price: number;
+    amount: number;
+    description: string;
+    image_url: string;
+  }): Promise<Product | null> {
+    return await db.product.create({
+      data: {
+        shop: {
+          connect: {
+            id: shop_id,
+          },
+        },
+
+        product_category: {
+          connectOrCreate: {
+            where: {
+              id: category_id || -1,
+            },
+            create: {
+              shop: {
+                connect: {
+                  id: shop_id,
+                },
+              },
+              category_name: "Uncategorized",
+            },
+          },
+        },
+
+        name: name,
+        price: price,
+        amount: amount,
+        description: description,
+        image_url: image_url,
       },
     });
   }

@@ -64,7 +64,7 @@ class ProductCategoryRepository{
 		product_category,
 	}:{
 		id : number;
-		product_category: Product_category;
+		product_category: Partial<Product_category>;
 	}): Promise<Product_category> {
 		try{
 			const respone = await db.product_category.update({

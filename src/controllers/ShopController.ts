@@ -123,6 +123,30 @@ ShopController.post(
   }
 );
 
+ShopController.post(
+  "/addProduct",
+  async ({ body }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.addProduct(body);
+    return shop;
+  },
+  {
+    body: t.Object({
+      shop_id: t.Number(),
+      category_id: t.Optional(t.Number()),
+      name: t.String(),
+      price: t.Number(),
+      amount: t.Number(),
+      description: t.String(),
+      image_url: t.String(),
+    }),
+    detail: {
+      summary: "Add Product",
+      description: "Add Product to Shop",
+    },
+  }
+);
+
 ShopController.put(
   "/update",
   async ({ body }) => {
@@ -147,22 +171,20 @@ ShopController.put(
 );
 
 ShopController.delete(
-	"/delete",
-	async ({body :{
-		shop_id
-	}}) =>{
-		const shopRepository = new ShopRepository();
-		shopRepository.deleteShop(shop_id);
-	},
-	{
-		body: t.Object({
-			shop_id : t.Number()
-		}),
-		detail: {
-			summary : "Delete Shop",
-			description : "Detate Shop by Id"
-		}
-	},
-)
+  "/delete",
+  async ({ body: { shop_id } }) => {
+    const shopRepository = new ShopRepository();
+    shopRepository.deleteShop(shop_id);
+  },
+  {
+    body: t.Object({
+      shop_id: t.Number(),
+    }),
+    detail: {
+      summary: "Delete Shop",
+      description: "Detate Shop by Id",
+    },
+  }
+);
 
 export default ShopController;
