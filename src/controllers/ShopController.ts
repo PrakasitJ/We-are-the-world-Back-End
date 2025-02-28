@@ -154,15 +154,15 @@ ShopController.post(
 
 ShopController.post(
   "/addBankAccount",
-  async ({ body: { shop_id, bank_id } }) => {
+  async ({ body: { shop_id, bank_account_id } }) => {
     const shopRepository = new ShopRepository();
-    const shop = await shopRepository.addBankAccount({ shop_id, bank_id });
+    const shop = await shopRepository.addBankAccount({ shop_id, bank_account_id });
     return shop;
   },
   {
     body: t.Object({
       shop_id: t.Number(),
-      bank_id: t.Number(),
+      bank_account_id: t.Number(),
     }),
     detail: {
       summary: "Add Bank Account",

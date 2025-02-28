@@ -149,13 +149,13 @@ class ShopRepository {
 
   public async addBankAccount({
     shop_id,
-    bank_id,
+    bank_account_id,
   }: {
     shop_id: number;
-    bank_id: number;
+    bank_account_id: number;
   }): Promise<Bank_account | null> {
     return await db.bank_account.update({
-      where: { id: bank_id },
+      where: { id: bank_account_id },
       data: {
         Shop: {
           connect: {
