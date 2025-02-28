@@ -11,12 +11,11 @@ model User {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  Admin       Admin?
-  Charity     Charity?
-  Shop        Shop[]
-  Rider       Rider?
-  Order       Order[]
-  Transaction Transaction[]
+  Admin   Admin?
+  Charity Charity?
+  Shop    Shop[]
+  Rider   Rider?
+  Order   Order[]
 
   User_location User_location[]
   Report        Report[]

@@ -15,7 +15,6 @@ model Rider {
     Rider_location  Rider_location?
     Rider_Documents Rider_Documents?
     Order           Order[]
-    Transaction     Transaction[]
     Report          Report[]
 }
 

@@ -20,7 +20,6 @@ model Shop {
     Shop_images      Shop_images[]
     Product          Product[]
     Order            Order[]
-    Transaction      Transaction[]
     Report           Report[]
     Product_category Product_category[]
 }
