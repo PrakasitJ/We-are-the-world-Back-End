@@ -18,5 +18,4 @@ model User {
   Order   Order[]
 
   User_location User_location[]
-  Report        Report[]
 }

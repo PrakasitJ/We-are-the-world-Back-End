@@ -18,7 +18,6 @@ model Charity {
     Charity_images    Charity_images[]
     Charity_filter    Charity_filter[]
     Order             Order[]
-    Report            Report[]
 }
 
 enum CharityStatus {

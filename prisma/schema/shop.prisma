@@ -16,11 +16,11 @@ model Shop {
     user         User          @relation(fields: [user_id], references: [uuid])
     bank_account Bank_account? @relation(fields: [bank_account_id], references: [id])
 
-    Shop_documents   Shop_documents?
-    Shop_images      Shop_images[]
-    Product          Product[]
-    Order            Order[]
-    Report           Report[]
+    Shop_documents Shop_documents?
+    Shop_images    Shop_images[]
+    Product        Product[]
+    Order          Order[]
+
     Product_category Product_category[]
 }
 
