@@ -36,7 +36,11 @@ class ShopRepository {
         bank_account: {
           select: {
             bank_account_number: true,
-            bank_name: true,
+            Bank: {
+              select: {
+                bank_name: true,
+              },
+            },
             account_holder_name: true,
           },
         },
@@ -160,6 +164,51 @@ class ShopRepository {
         },
       },
     });
+  }
+
+  public async createBankAndAddToShop({
+    shop_id,
+    bank_account_number,
+    account_holder_name,
+    bank_id,
+  }: {
+    shop_id: number;
+    bank_account_number: string;
+    account_holder_name: string;
+    bank_id: number;
+  }): Promise<Bank_account | null> {
+    try {
+      const bankAccount = await db.bank_account.create({
+        data: {
+          Shop: {
+            connect: {
+              id: shop_id,
+            },
+          },
+          Bank: {
+            connect: {
+              id: bank_id,
+            },
+          },
+          bank_account_number: bank_account_number,
+          account_holder_name: account_holder_name,
+        },
+      });
+      return bankAccount;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        switch (error.code) {
+          case "P2002":
+            throw new Error("Bank account number already exists");
+          case "P2025":
+            throw new Error("Bank id not found");
+          default:
+            throw new Error(error.code);
+        }
+      }
+      //Handle Unknown Error
+      throw new Error("Internal Server Error");
+    }
   }
 
   public async addProduct({

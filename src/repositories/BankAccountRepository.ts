@@ -35,12 +35,12 @@ class BankAccountRepository {
   }
 
   public async createBankAccount({
-    bank_name,
+    bank_id,
     bank_account_number,
     account_holder_name,
     createdAt,
   }: {
-    bank_name: string;
+    bank_id: number;
     bank_account_number: string;
     account_holder_name: string;
     createdAt: Date;
@@ -48,7 +48,7 @@ class BankAccountRepository {
     try {
       const response = await db.bank_account.create({
         data: {
-          bank_name: bank_name,
+          bank_id: bank_id ,
           bank_account_number: bank_account_number,
           account_holder_name: account_holder_name,
           createdAt: createdAt,

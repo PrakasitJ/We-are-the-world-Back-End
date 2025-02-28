@@ -86,6 +86,54 @@ ShopController.post(
 );
 
 ShopController.post(
+  "/createBankAccountAndAddToShop",
+  async ({
+    body: { shop_id, bank_account_number, account_holder_name, bank_id },
+  }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.createBankAndAddToShop({
+      shop_id,
+      bank_account_number,
+      account_holder_name,
+      bank_id,
+    });
+    return shop;
+  },
+  {
+    body: t.Object({
+      shop_id: t.Number({
+        minimum: 1,
+        error: "Shop Id must be a number",
+        description: "Shop Id must be a number and greater than 0",
+      }),
+      bank_account_number: t.String({
+        minLength: 18,
+        maxLength: 18,
+        pattern: "^[0-9]+$",
+        error: "Bank Account Number must be a string and 18 characters",
+        description: "Bank Account Number must be a string and 18 characters",
+      }),
+      account_holder_name: t.String({
+        minLength: 1,
+        maxLength: 255,
+        pattern: "^[a-zA-Z ]*$",
+        error: "Account Holder Name must be a string and not empty",
+        description: "Account Holder Name must be a string and not empty",
+      }),
+      bank_id: t.Number({
+        minimum: 1,
+        error: "Bank Id must be a number",
+        description: "Bank Id must be a number and greater than 0",
+      }),
+    }),
+    detail: {
+      summary: "Create Bank Account and Add to Shop",
+      description: "Create Bank Account and Add to Shop",
+    },
+  }
+);
+
+ShopController.post(
   "/addShopImage",
   async ({ body: { shop_id, image_url } }) => {
     const shopRepository = new ShopRepository();

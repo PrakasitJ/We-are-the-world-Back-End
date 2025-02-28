@@ -9,6 +9,8 @@ import BankAccountController from "./controllers/BankAccountController";
 import ProductListController from "./controllers/ProductListController";
 import CharityController from "./controllers/CharityController";
 import VehicleTypeController from "./controllers/VehicleController";
+import OrderController from "./controllers/OrderController";
+import BankController from "./controllers/BankController";
 
 //This is the main app
 const app = new Elysia();
@@ -38,6 +40,8 @@ app.use(
         },
         { name: "Product List", description: "Product List related endpoints" },
         { name: "Vehicle Type", description: "Vehicle Type related endpoints" },
+        { name: "Order", description: "Order related endpoints" },
+        { name: "Bank", description: "Bank related endpoints" },
       ],
     },
     path: "/api/docs",
@@ -52,6 +56,8 @@ app.use(ProductController);
 app.use(ProductCategoryController);
 app.use(ProductListController);
 app.use(VehicleTypeController);
+app.use(OrderController);
+app.use(BankController);
 // app.use(anotherController);
 // if you have more controllers, you can use them here
 

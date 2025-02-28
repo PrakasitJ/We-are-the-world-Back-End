@@ -43,7 +43,8 @@ BankAccountController.get(
   "/get/:id/detail",
   async ({ params: { id } }) => {
     const bankAccountRepository = new BankAccountRepository();
-    const bankAccount = await bankAccountRepository.getBankAccountByIdWithDetail(id);
+    const bankAccount =
+      await bankAccountRepository.getBankAccountByIdWithDetail(id);
     return bankAccount ?? { error: "Bank account not found", status: 200 };
   },
   {
@@ -60,11 +61,11 @@ BankAccountController.get(
 BankAccountController.post(
   "/create",
   async ({
-    body: { bank_name, bank_account_number, account_holder_name, createdAt },
+    body: { bank_id, bank_account_number, account_holder_name, createdAt },
   }) => {
     const bankAccountRepository = new BankAccountRepository();
     const bankAccount = await bankAccountRepository.createBankAccount({
-      bank_name,
+      bank_id,
       bank_account_number,
       account_holder_name,
       createdAt,
@@ -73,14 +74,10 @@ BankAccountController.post(
   },
   {
     body: t.Object({
-      bank_name: t.String({
-        pattern: "^[a-zA-Zก-๛]*$",
-        minLength: 5,
-        maxLength: 20,
+      bank_id: t.Number({
+        minimum: 1,
         error: {
-          pattern: "Bank name should contain only characters",
-          minLength: "Bank name should be 5-20 characters",
-          maxLength: "Bank name should be 5-20 characters",
+          minimum: "Bank Id must be greater than 0",
         },
       }),
       bank_account_number: t.String({
