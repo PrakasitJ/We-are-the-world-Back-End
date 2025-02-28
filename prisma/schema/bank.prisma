@@ -1,0 +1,8 @@
+model Bank {
+    id         Int      @id @default(autoincrement())
+    bank_name  String   @db.VarChar(30)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+
+    Bank_account Bank_account[]
+}
