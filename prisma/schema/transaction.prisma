@@ -1,10 +1,11 @@
 model Transaction {
-    id            Int               @id @default(autoincrement())
-    order_id      Int               @unique
-    status        TransactionStatus @default(PENDING)
-    createdAt     DateTime          @default(now())
-    updatedAt     DateTime          @updatedAt
-    last_login_at DateTime          @default(now())
+    id             Int               @id @default(autoincrement())
+    order_id       Int               @unique
+    payment_method PaymentMethod
+    reference_id   String            @db.VarChar(50)
+    status         TransactionStatus @default(PENDING)
+    createdAt      DateTime          @default(now())
+    updatedAt      DateTime          @updatedAt
 
     Order Order @relation(fields: [order_id], references: [id])
 }
@@ -14,4 +15,11 @@ enum TransactionStatus {
     ACCEPTED
     REJECTED
     CANCELLED
+}
+
+enum PaymentMethod {
+    CREDIT_CARD
+    PAYPAL
+    ONLINE_BANKING
+    DEPOSIT
 }
