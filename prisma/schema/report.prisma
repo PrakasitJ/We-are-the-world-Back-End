@@ -1,6 +1,7 @@
 model Report {
     id                  Int      @id @default(autoincrement())
     checked_by_admin_id Int?
+    reason_id           Int      @unique
     report_by           Who
     report_to           Who
     from_order_id       Int
@@ -9,8 +10,9 @@ model Report {
     created_at          DateTime @default(now())
     updated_at          DateTime @updatedAt
 
-    admin Admin? @relation(fields: [checked_by_admin_id], references: [id])
-    order Order  @relation(fields: [from_order_id], references: [id])
+    admin  Admin?  @relation(fields: [checked_by_admin_id], references: [id])
+    order  Order   @relation(fields: [from_order_id], references: [id])
+    reason reason? @relation(fields: [reason_id], references: [id])
 }
 
 enum Who {

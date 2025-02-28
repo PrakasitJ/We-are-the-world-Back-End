@@ -1,6 +1,8 @@
 model reason {
     id        Int      @id @default(autoincrement())
-    reason    String
+    reason    String   @db.VarChar(50)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    Report Report[]
 }
