@@ -44,6 +44,23 @@ UserController.get(
 
 UserController.get(
   // Define GET route
+  "/:id/detail",
+  async ({ params: { id } }) => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const user: User | null = await userRepository.getUserByIdWithDetail(id); // Get user by id with detail
+    return user ?? { error: "User not found", status: 200 }; // Return user or error
+  },
+  {
+    params: t.Object({ id: t.String() }), // Define id parameter
+    detail: {
+      summary: "Get User By Id With Detail", // API Name for documentation
+      description: "Get user by id with detail from database", // API Description for documentation
+    },
+  }
+);
+
+UserController.get(
+  // Define GET route
   "/all",
   async () => {
     const userRepository = new UserRepository(); // Create new UserRepository instance
@@ -178,6 +195,48 @@ UserController.post(
     detail: {
       summary: "Create User", // API Name for documentation
       description: "Create user in database", // API Description for documentation
+    },
+  }
+);
+
+UserController.put(
+  "/registerToBeRider",
+  async ({ body: { vehicle_registration, user_id } }) => {
+    const userRepository = new UserRepository();
+    const user = await userRepository.registerToBeRider({
+      vehicle_registration: vehicle_registration,
+      user_id: user_id,
+    });
+    return user;
+  },
+  {
+    body: t.Object({
+      user_id: t.String({
+        minLength: 36,
+        maxLength: 36,
+        pattern: "^[a-zA-Z0-9-]*$",
+        error: {
+          minLength: "User Id should have at least 36 characters",
+          maxLength: "User Id should have at most 36 characters",
+          format: "User Id should have no whitespace and have 36 characters",
+        },
+      }),
+      vehicle_registration: t.String({
+        minLength: 2,
+        maxLength: 30,
+        pattern: "^[a-zA-Z0-9ก-๛ ]*$",
+        error: {
+          minLength: "Username should have at least 2 characters",
+          maxLength: "Username should have at most 30 characters",
+          format: "Username should have no whitespace and have 2-30 characters",
+        },
+        description:
+          "Username should have no whitespace and have 2-30 characters",
+      }),
+    }),
+    detail: {
+      summary: "Register to be Rider",
+      description: "Register to be Rider",
     },
   }
 );

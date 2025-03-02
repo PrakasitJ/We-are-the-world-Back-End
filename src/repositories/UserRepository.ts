@@ -13,6 +13,20 @@ class UserRepository {
     });
   }
 
+  public async getUserByIdWithDetail(uuid: string): Promise<User | null> {
+    //Make Request to Database and return User
+    return await db.user.findUnique({
+      where: { uuid: uuid },
+      include: {
+        Admin: true,
+        Rider: true,
+        Shop: true,
+        Charity: true,
+        User_location: true,
+      },
+    });
+  }
+
   public async getAllUsers(): Promise<User[]> {
     //Make Request to Database and return all Users
     return await db.user.findMany();
@@ -57,6 +71,47 @@ class UserRepository {
             throw new Error("Email already exists");
           default:
             throw new Error("Internal Server Error");
+        }
+      }
+      //Handle Unknown Error
+      throw new Error("Internal Server Error");
+    }
+  }
+
+  public async registerToBeRider({
+    user_id,
+    vehicle_registration,
+  }: {
+    user_id: string;
+    vehicle_registration: string;
+  }): Promise<User> {
+    try {
+      //Make Request to Database and return User
+      const response = await db.user.update({
+        where: { uuid: user_id },
+        data: {
+          Rider: {
+            create: {
+              vehicle_registration: vehicle_registration,
+            },
+          },
+        },
+      });
+      return response;
+    } catch (error) {
+      //Handle Error from Database
+      if (error instanceof PrismaClientKnownRequestError) {
+        switch (error.code) {
+          case "P2000":
+            throw new Error("Too long vehicle registration");
+          case "P2014":
+            throw new Error("Already a rider");
+          case "P2002":
+            throw new Error("Invalid foreign key");
+          case "P2023":
+            throw new Error("Invalid input");
+          default:
+            throw new Error(error.code);
         }
       }
       //Handle Unknown Error
