@@ -1,9 +1,10 @@
 model Order {
     id                   Int         @id @default(autoincrement())
-    charity_id           Int
+    charity_id           Int?
     customer_id          String      @db.Uuid
     rider_id             Int
     shop_id              Int
+    pickup_location_id   Int
     service_fee          Float
     status               OrderStatus @default(PLACED)
     note                 String      @db.VarChar(500)
@@ -11,10 +12,11 @@ model Order {
     created_at           DateTime    @default(now())
     updated_at           DateTime    @updatedAt
 
-    charity      Charity        @relation(fields: [charity_id], references: [id])
+    charity      Charity?       @relation(fields: [charity_id], references: [id])
     customer     User           @relation(fields: [customer_id], references: [uuid])
     rider        Rider          @relation(fields: [rider_id], references: [id])
     shop         Shop           @relation(fields: [shop_id], references: [id])
+    location     User_location  @relation(fields: [pickup_location_id], references: [id])
     Product_list Product_list[]
     Transaction  Transaction?
     Report       Report[]
