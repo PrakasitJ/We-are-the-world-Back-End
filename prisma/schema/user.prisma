@@ -7,7 +7,6 @@ model User {
   surname           String   @db.VarChar(15)
   tel               String   @db.VarChar(10)
   salt              String   @db.VarChar(10)
-  current_location  Int?     @unique
   profile_image_url String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -18,6 +17,5 @@ model User {
   Rider   Rider?
   Order   Order[]
 
-  User_locations  User_location[] @relation("UserToLocations")
-  currentLocation User_location?  @relation("UserToCurrentLocation", fields: [current_location], references: [id])
+  User_location User_location[]
 }
