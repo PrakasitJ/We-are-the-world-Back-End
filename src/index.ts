@@ -11,6 +11,8 @@ import CharityController from "./controllers/CharityController";
 import VehicleTypeController from "./controllers/VehicleController";
 import OrderController from "./controllers/OrderController";
 import BankController from "./controllers/BankController";
+import LocationRepository from "./repositories/LocationRepository";
+import LocationController from "./controllers/LocationController";
 
 //This is the main app
 const app = new Elysia();
@@ -58,6 +60,7 @@ app.use(ProductListController);
 app.use(VehicleTypeController);
 app.use(OrderController);
 app.use(BankController);
+app.use(LocationController);
 // app.use(anotherController);
 // if you have more controllers, you can use them here
 

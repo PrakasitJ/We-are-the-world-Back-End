@@ -37,7 +37,7 @@ class OrderRepository {
     pickup_location_id,
     note,
   }: {
-    charity_id: number;
+    charity_id?: number;
     customer_id: string;
     rider_id: number;
     shop_id: number;
@@ -48,13 +48,13 @@ class OrderRepository {
     try {
       const response = await db.order.create({
         data: {
-          charity_id: charity_id || undefined,
+          charity_id: charity_id,
           customer_id: customer_id,
           rider_id: rider_id,
           shop_id: shop_id,
           service_fee: service_fee,
           finish_job_image_url: "",
-          pickup_location_id: 0,
+          pickup_location_id: pickup_location_id,
           note: note,
         },
       });

@@ -74,10 +74,10 @@ OrderController.post(
   },
   {
     body: t.Object({
-      charity_id: t.Number({
+      charity_id: t.Optional(t.Number({
         minimum: 1,
         error: "Charity id must be a number and greater than 0",
-      }),
+      })),
       customer_id: t.String({
         minLength: 1,
         error: "Customer id must be a string and not empty",
