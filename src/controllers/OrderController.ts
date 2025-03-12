@@ -67,6 +67,7 @@ OrderController.post(
       rider_id: body.rider_id,
       shop_id: body.shop_id,
       service_fee: body.service_fee,
+      pickup_location_id: body.pickup_location_id,
       note: body.note,
     });
     return order;
@@ -92,6 +93,10 @@ OrderController.post(
       service_fee: t.Number({
         minimum: 1,
         error: "Service fee must be a number and greater than 0",
+      }),
+      pickup_location_id: t.Number({
+        minimum: 1,
+        error: "Pickup location id must be a number and greater than 0",
       }),
       note: t.String({
         minLength: 1,
