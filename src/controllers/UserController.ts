@@ -133,16 +133,16 @@ UserController.post(
         // Define password parameter
         minLength: 8,
         maxLength: 12,
-        pattern:
-          '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\\d!@#$%^&*(),.?":{}|<>]{8,12}$',
-        error: {
-          minLength: "Password should have at least 8 characters",
-          maxLength: "Password should have at most 12 characters",
-          pattern:
-            "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
-        },
-        description:
-          "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+        // pattern:
+        //   '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\\d!@#$%^&*(),.?":{}|<>]{8,12}$',
+        // error: {
+        //   minLength: "Password should have at least 8 characters",
+        //   maxLength: "Password should have at most 12 characters",
+        //   pattern:
+        //     "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+        // },
+        // description:
+        //   "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
       }),
       name: t.String({
         // Define name parameter
