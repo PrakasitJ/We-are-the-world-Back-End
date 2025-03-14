@@ -44,6 +44,12 @@ app.use(
         { name: "Vehicle Type", description: "Vehicle Type related endpoints" },
         { name: "Order", description: "Order related endpoints" },
         { name: "Bank", description: "Bank related endpoints" },
+        { name: "ProductList", description: "Product List related endpoints" },
+        { name: "Location", description: "Location related endpoints" },
+        {
+          name: "ProductCategory",
+          description: "Product Category related endpoints",
+        },
       ],
     },
     path: "/api/docs",

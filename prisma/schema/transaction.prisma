@@ -18,6 +18,7 @@ enum TransactionStatus {
 }
 
 enum PaymentMethod {
+    CASH
     CREDIT_CARD
     PAYPAL
     ONLINE_BANKING

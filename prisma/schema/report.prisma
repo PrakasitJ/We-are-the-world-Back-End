@@ -6,13 +6,13 @@ model Report {
     report_to           Who
     from_order_id       Int
     note                String
-    status              String
+    status              status
     created_at          DateTime @default(now())
     updated_at          DateTime @updatedAt
 
     admin  Admin?  @relation(fields: [checked_by_admin_id], references: [id])
     order  Order   @relation(fields: [from_order_id], references: [id])
-    reason reason? @relation(fields: [reason_id], references: [id])
+    reason Reason? @relation(fields: [reason_id], references: [id])
 }
 
 enum Who {
@@ -20,4 +20,10 @@ enum Who {
     CHARITY
     RIDER
     SHOP
+}
+
+enum status {
+    PENDING
+    RESOLVED
+    REJECTED
 }

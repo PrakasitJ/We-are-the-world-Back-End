@@ -6,7 +6,7 @@ model Product {
     image_url           String
     price               Int
     amount              Int
-    description         String        @db.VarChar(50)
+    description         String        @db.VarChar(500)
     status              ProductStatus @default(AVAILABLE)
     createdAt           DateTime      @default(now())
     updatedAt           DateTime      @updatedAt

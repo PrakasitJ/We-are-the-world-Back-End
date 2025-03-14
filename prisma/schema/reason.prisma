@@ -1,4 +1,4 @@
-model reason {
+model Reason {
     id        Int      @id @default(autoincrement())
     reason    String   @db.VarChar(50)
     createdAt DateTime @default(now())

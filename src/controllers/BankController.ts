@@ -9,7 +9,9 @@ const BankController = new Elysia({
 BankController.get(
   "/getAll",
   async () => {
-    return { message: "Get all bank" };
+    const bankRepository = new BankRepository();
+    const banks = bankRepository.getAllBanks();
+    return banks;
   },
   {
     detail: {
@@ -22,7 +24,9 @@ BankController.get(
 BankController.get(
   "/get/:id",
   async ({ params: { id } }) => {
-    return { message: "Get Bank by id", id };
+    const bankRepository = new BankRepository();
+    const bank = bankRepository.getBankById(parseInt(id));
+    return bank;
   },
   {
     detail: {
@@ -35,7 +39,9 @@ BankController.get(
 BankController.get(
   "/get/:id/detail",
   async ({ params: { id } }) => {
-    return { message: "Get Bank by id with all detail", id };
+    const bankRepository = new BankRepository();
+    const bank = bankRepository.getBankById(parseInt(id));
+    return bank;
   },
   {
     detail: {
