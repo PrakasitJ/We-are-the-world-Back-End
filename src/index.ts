@@ -11,7 +11,6 @@ import CharityController from "./controllers/CharityController";
 import VehicleTypeController from "./controllers/VehicleController";
 import OrderController from "./controllers/OrderController";
 import BankController from "./controllers/BankController";
-import LocationRepository from "./repositories/LocationRepository";
 import LocationController from "./controllers/LocationController";
 
 //This is the main app

@@ -27,17 +27,84 @@ UserController.model({
 
 UserController.get(
   // Define GET route
-  "/:id",
-  async ({ params: { id } }) => {
+  "/username/:username",
+  async ({ params: { username } }) => {
     const userRepository = new UserRepository(); // Create new UserRepository instance
-    const user: User | null = await userRepository.getUserById(id); // Get user by id
+    const user: User | null = await userRepository.getUserByUsername(username); // Get user by username
     return user ?? { error: "User not found", status: 200 }; // Return user or error
   },
   {
-    params: t.Object({ id: t.String() }), // Define id parameter
+    params: t.Object({ username: t.String() }), // Define username parameter
     detail: {
-      summary: "Get User By Id", // API Name for documentation
-      description: "Get user by id from database", // API Description for documentation
+      summary: "Get User By Username", // API Name for documentation
+      description: "Get user by username from database", // API Description for documentation
+    },
+  }
+);
+
+UserController.get(
+  // Define GET route
+  "/email/:email",
+  async ({ params: { email } }) => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const user: User | null = await userRepository.getUserByEmail(email); // Get user by email
+    return user ?? { error: "User not found", status: 200 }; // Return user or error
+  },
+  {
+    params: t.Object({ email: t.String() }), // Define email parameter
+    detail: {
+      summary: "Get User By Email", // API Name for documentation
+      description: "Get user by email from database", // API Description for documentation
+    },
+  }
+);
+
+UserController.get(
+  "/emailorusername/:data",
+  async ({ params: { data } }) => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const user: User | null = await userRepository.getUserByUsernameOrEmail(
+      data
+    ); // Get user by email or username
+    return user ?? { error: "User not found", status: 200 }; // Return user or error
+  },
+  {
+    params: t.Object({ data: t.String() }), // Define data parameter
+    detail: {
+      summary: "Get User By Email Or Username", // API Name for documentation
+      description: "Get user by email or username from database", // API Description for documentation
+    },
+  }
+);
+
+UserController.post(
+  "/login",
+  async ({ body: { usernameOrEmail, password }, set }) => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const user: User | null = await userRepository.getUserByUsernameOrEmail(
+      usernameOrEmail
+    ); // Get user by email or username
+    if (user) {
+      const isPasswordMatch = await Bun.password.verify(
+        password + user.salt,
+        user.password
+      ); // Verify password
+      if (isPasswordMatch) {
+        return user; // Return user
+      }
+    }
+    set.status = 400; // Set status to 400
+    return { error: "Username or password is incorrect", status: 400 }; // Return error
+  },
+  {
+    body: t.Object({
+      // Define body parameter
+      usernameOrEmail: t.String(),
+      password: t.String(),
+    }),
+    detail: {
+      summary: "Login", // API Name for documentation
+      description: "Login user to system", // API Description for documentation
     },
   }
 );
