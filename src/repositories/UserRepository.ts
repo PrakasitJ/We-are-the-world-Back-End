@@ -110,6 +110,56 @@ class UserRepository {
     }
   }
 
+  public async updateUser({
+    body,
+  }: {
+    body: {
+      uuid: string;
+      username?: string;
+      email?: string;
+      name?: string;
+      surname?: string;
+      tel?: string;
+      password?: string;
+      profile_image_url?: string;
+    };
+  }): Promise<User> {
+    try {
+      const user_id = body.uuid;
+      let bodyCopy: Partial<typeof body> & { salt?: string } = { ...body };
+      delete bodyCopy.uuid;
+
+      if (body.password) {
+        const salt = Math.random().toString(36).substring(7);
+        bodyCopy.password = await Bun.password.hash(
+          body.password + salt,
+          "bcrypt"
+        );
+        bodyCopy.salt = salt;
+      }
+      const response = await db.user.update({
+        where: { uuid: user_id },
+        data: bodyCopy,
+      });
+      return response;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        switch (error.code) {
+          case "P2002":
+            throw new Error("Email already exists");
+          case "P2014":
+            throw new Error("Already a rider");
+          case "P2023":
+            throw new Error("Invalid input");
+          default:
+            throw new Error(error.code);
+        }
+      }
+      //Handle Unknown Error
+      throw new Error("Internal Server Error");
+    }
+  }
+
   public async registerToBeRider({
     user_id,
     vehicle_registration,

@@ -267,46 +267,178 @@ UserController.post(
 );
 
 UserController.put(
-  "/registerToBeRider",
-  async ({ body: { vehicle_registration, user_id } }) => {
-    const userRepository = new UserRepository();
-    const user = await userRepository.registerToBeRider({
-      vehicle_registration: vehicle_registration,
-      user_id: user_id,
-    });
-    return user;
+  // Define PUT route
+  "/update",
+  async ({ body, set }) => {
+    // Get id and body from request and set for custom response
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+
+    try {
+      const user: User | null = await userRepository.updateUser({ body }); // Update user by id
+      return user ?? { error: "User not found", status: 200 }; // Return user or error
+    } catch (error: any) {
+      set.status = 400;
+      return { error: error.message, status: 400 };
+    }
   },
   {
     body: t.Object({
-      user_id: t.String({
+      uuid: t.String({
         minLength: 36,
         maxLength: 36,
-        pattern: "^[a-zA-Z0-9-]*$",
         error: {
           minLength: "User Id should have at least 36 characters",
           maxLength: "User Id should have at most 36 characters",
           format: "User Id should have no whitespace and have 36 characters",
         },
       }),
-      vehicle_registration: t.String({
-        minLength: 2,
-        maxLength: 30,
-        pattern: "^[a-zA-Z0-9ก-๛ ]*$",
-        error: {
-          minLength: "Username should have at least 2 characters",
-          maxLength: "Username should have at most 30 characters",
-          format: "Username should have no whitespace and have 2-30 characters",
-        },
-        description:
-          "Username should have no whitespace and have 2-30 characters",
-      }),
+      username: t.Optional(
+        t.String({
+          minLength: 2,
+          maxLength: 30,
+          format: "hostname",
+          error: {
+            minLength: "Username should have at least 2 characters",
+            maxLength: "Username should have at most 30 characters",
+            format:
+              "Username should have no whitespace and have 2-30 characters",
+          },
+          description:
+            "Username should have no whitespace and have 2-30 characters",
+        })
+      ),
+      email: t.Optional(
+        t.String({
+          // Define email parameter
+          minLength: 5,
+          maxLength: 20,
+          format: "email",
+          error: {
+            minLength: "Email should have at least 5 characters",
+            maxLength: "Email should have at most 20 characters",
+            format: "Email should be in email form and have 5-20 characters",
+          },
+          description: "Email should be in email form and have 5-20 characters",
+        })
+      ),
+      password: t.Optional(
+        t.String({
+          // Define password parameter
+          minLength: 8,
+          maxLength: 12,
+          pattern:
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\\d!@#$%^&*(),.?":{}|<>]{8,12}$',
+          error: {
+            minLength: "Password should have at least 8 characters",
+            maxLength: "Password should have at most 12 characters",
+            pattern:
+              "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+          },
+          description:
+            "Password should be 8-12 characters long and contain at least one uppercase letter, one lowercase letter, one digit, and one special character.",
+        })
+      ),
+      name: t.Optional(
+        t.String({
+          minLength: 2,
+          maxLength: 15,
+          pattern: "^[a-zA-Z]*$",
+          error: {
+            minLength: "Name should have at least 2 characters",
+            maxLength: "Name should have at most 15 characters",
+          },
+          description:
+            "Name should have at least 2 characters and at most 15 characters",
+        })
+      ),
+      surname: t.Optional(
+        t.String({
+          // Define surname parameter
+          minLength: 2,
+          maxLength: 15,
+          pattern: "^[a-zA-Z]*$",
+          error: {
+            minLength: "Surname should have at least 2 characters",
+            maxLength: "Surname should have at most 15 characters",
+          },
+          description:
+            "Surname should have at least 2 characters and at most 15 characters",
+        })
+      ),
+      tel: t.Optional(
+        t.String({
+          // Define tel parameter
+          minLength: 10,
+          maxLength: 10,
+          pattern: "^[0-9]*$",
+          error: {
+            minLength: "Tel should have 10 characters",
+            maxLength: "Tel should have 10 characters",
+          },
+          description: "Tel should have 10 characters",
+        })
+      ),
+      profile_image_url: t.Optional(
+        t.String({ 
+          minLength: 10,
+          maxLength: 100,
+          pattern: "^[a-zA-Z0-9ก-๛./:]*$",
+          error: {
+            minLength: "Profile Image Url should have at least 10 characters",
+            maxLength: "Profile Image Url should have at most 100 characters",
+          },
+          description: "Profile Image Url should have 10-100 characters",
+        })
+      ),
     }),
     detail: {
-      summary: "Register to be Rider",
-      description: "Register to be Rider",
+      summary: "Update User", // API Name for documentation
+      description: "Update user in database", // API Description for documentation
     },
   }
-);
+),
+  UserController.put(
+    "/registerToBeRider",
+    async ({ body: { vehicle_registration, user_id } }) => {
+      const userRepository = new UserRepository();
+      const user = await userRepository.registerToBeRider({
+        vehicle_registration: vehicle_registration,
+        user_id: user_id,
+      });
+      return user;
+    },
+    {
+      body: t.Object({
+        user_id: t.String({
+          minLength: 36,
+          maxLength: 36,
+          pattern: "^[a-zA-Z0-9-]*$",
+          error: {
+            minLength: "User Id should have at least 36 characters",
+            maxLength: "User Id should have at most 36 characters",
+            format: "User Id should have no whitespace and have 36 characters",
+          },
+        }),
+        vehicle_registration: t.String({
+          minLength: 2,
+          maxLength: 30,
+          pattern: "^[a-zA-Z0-9ก-๛ ]*$",
+          error: {
+            minLength: "Username should have at least 2 characters",
+            maxLength: "Username should have at most 30 characters",
+            format:
+              "Username should have no whitespace and have 2-30 characters",
+          },
+          description:
+            "Username should have no whitespace and have 2-30 characters",
+        }),
+      }),
+      detail: {
+        summary: "Register to be Rider",
+        description: "Register to be Rider",
+      },
+    }
+  );
 
 // You can define more routes here
 // UserController.get(...)
