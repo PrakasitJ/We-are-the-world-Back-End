@@ -28,6 +28,21 @@ class OrderRepository {
     });
   }
 
+  public async getOrderByUserId(id: string): Promise<Order[] | null> {
+    return await db.order.findMany({
+      where: { customer_id: id },
+      include: {
+        charity: true,
+        customer: true,
+        rider: true,
+        shop: true,
+        Product_list: true,
+        Transaction: true,
+        Report: true,
+      },
+    });
+  }
+
   public async createOrder({
     charity_id,
     customer_id,

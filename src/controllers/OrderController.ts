@@ -57,6 +57,20 @@ OrderController.get(
   }
 );
 
+OrderController.get(
+  "/getByUserId/:id",
+  async ({ params: { id } }) => {
+    const orderRepository = new OrderRepository();
+    const order = await orderRepository.getOrderByUserId(id);
+    return order ?? { error: "Order not found", status: 200 };
+  },
+  {
+    params: t.Object({
+      id: t.String(),
+    })
+  }
+);
+
 OrderController.post(
   "/create",
   async ({ body }) => {
