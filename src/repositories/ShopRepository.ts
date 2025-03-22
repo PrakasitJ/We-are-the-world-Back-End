@@ -9,6 +9,10 @@ interface ShopWithDetail extends Partial<Shop> {
   product: Record<string, Product[]> | null;
 }
 
+interface ShopWithImage extends Partial<Shop> {
+  Shop_images: Shop_images[];
+}
+
 class ShopRepository {
   public async getShopById(id: number): Promise<Shop | null> {
     //Make Request to Database and return Shop
@@ -90,6 +94,25 @@ class ShopRepository {
     return await db.shop.findMany();
   }
 
+  public async getAllShopsWithImagesAndCategory(): Promise<ShopWithImage[]> {
+    const shops = await db.shop.findMany({
+      include: {
+        Shop_images: true,
+        Product: {
+          distinct: ["product_category_id"],
+          select: {
+            product_category: {
+              select: {
+                category_name: true
+              },
+            },
+          },
+        },
+      },
+    });
+    return shops;
+  }
+
   public async create({
     user_id,
     name,
@@ -144,6 +167,16 @@ class ShopRepository {
         shop_id: shop_id,
         image_url: image_url,
       },
+    });
+  }
+
+  public async removeShopImage({
+    shop_image_id,
+  }: {
+    shop_image_id: number;
+  }): Promise<Shop_images | null> {
+    return await db.shop_images.delete({
+      where: { id: shop_image_id },
     });
   }
 

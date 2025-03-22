@@ -22,6 +22,21 @@ ShopController.get(
 );
 
 ShopController.get(
+  "/getAllWithImagesAndCategory",
+  async () => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.getAllShopsWithImagesAndCategory();
+    return shop;
+  },
+  {
+    detail: {
+      summary: "Get all Shop with Images",
+      description: "Get all Shop with Images in database",
+    },
+  }
+);
+
+ShopController.get(
   "/get/:id",
   async ({ params: { id } }) => {
     const shopRepository = new ShopRepository();
@@ -152,11 +167,32 @@ ShopController.post(
   }
 );
 
+ShopController.delete(
+  "/removeShopImage",
+  async ({ body: { shop_image_id } }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.removeShopImage({ shop_image_id });
+    return shop;
+  },
+  {
+    body: t.Object({
+      shop_image_id: t.Number(),
+    }),
+    detail: {
+      summary: "Remove Shop Image",
+      description: "Remove Shop Image in database",
+    },
+  }
+);
+
 ShopController.post(
   "/addBankAccount",
   async ({ body: { shop_id, bank_account_id } }) => {
     const shopRepository = new ShopRepository();
-    const shop = await shopRepository.addBankAccount({ shop_id, bank_account_id });
+    const shop = await shopRepository.addBankAccount({
+      shop_id,
+      bank_account_id,
+    });
     return shop;
   },
   {
