@@ -7,10 +7,10 @@ class ProductCategoryRepository{
 		return await db.product_category.findMany();
 	}
 
-	public async getProductCategoryById(id: number): Promise<Product_category | null> {
+	public async getProductCategoryById(id: number): Promise<Product_category[] | null> {
 		try{
-			const respone = await db.product_category.findUnique({
-				where: {id : id}
+			const respone = await db.product_category.findMany({
+				where: {shop_id : id}
 			});
 			return respone;
 		}catch(error){

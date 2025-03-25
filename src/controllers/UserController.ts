@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 import UserRepository from "../repositories/UserRepository";
-import { User } from "@prisma/client";
+import { User, Shop_status } from "@prisma/client";
 import { password } from "bun";
 
 const UserController = new Elysia({
@@ -77,6 +77,39 @@ UserController.get(
   }
 );
 
+UserController.get(
+  // Define GET route
+  "/:id/detail",
+  async ({ params: { id } }) => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const user: User | null = await userRepository.getUserByIdWithDetail(id); // Get user by id with detail
+    return user ?? { error: "User not found", status: 200 }; // Return user or error
+  },
+  {
+    params: t.Object({ id: t.String() }), // Define id parameter
+    detail: {
+      summary: "Get User By Id With Detail", // API Name for documentation
+      description: "Get user by id with detail from database", // API Description for documentation
+    },
+  }
+);
+
+UserController.get(
+  // Define GET route
+  "/all",
+  async () => {
+    const userRepository = new UserRepository(); // Create new UserRepository instance
+    const users: User[] = await userRepository.getAllUsers(); // Get all users
+    return users; // Return all users
+  },
+  {
+    detail: {
+      summary: "Get All User", // API Name for documentation
+      description: "Get all user from database", // API Description for documentation
+    },
+  }
+);
+
 UserController.post(
   "/login",
   async ({ body: { usernameOrEmail, password }, set }) => {
@@ -109,35 +142,20 @@ UserController.post(
   }
 );
 
-UserController.get(
-  // Define GET route
-  "/:id/detail",
-  async ({ params: { id } }) => {
-    const userRepository = new UserRepository(); // Create new UserRepository instance
-    const user: User | null = await userRepository.getUserByIdWithDetail(id); // Get user by id with detail
-    return user ?? { error: "User not found", status: 200 }; // Return user or error
+UserController.post(
+  "/registerToBeShop",
+  async ({ body: { user_id } }) => {
+    const userRepository = new UserRepository();
+    const user = await userRepository.registerToBeShop(user_id);
+    return user;
   },
   {
-    params: t.Object({ id: t.String() }), // Define id parameter
+    body: t.Object({
+      user_id: t.String(),
+    }),
     detail: {
-      summary: "Get User By Id With Detail", // API Name for documentation
-      description: "Get user by id with detail from database", // API Description for documentation
-    },
-  }
-);
-
-UserController.get(
-  // Define GET route
-  "/all",
-  async () => {
-    const userRepository = new UserRepository(); // Create new UserRepository instance
-    const users: User[] = await userRepository.getAllUsers(); // Get all users
-    return users; // Return all users
-  },
-  {
-    detail: {
-      summary: "Get All User", // API Name for documentation
-      description: "Get all user from database", // API Description for documentation
+      summary: "Register to be Shop",
+      description: "Register to be Shop",
     },
   }
 );
@@ -379,7 +397,7 @@ UserController.put(
         })
       ),
       profile_image_url: t.Optional(
-        t.String({ 
+        t.String({
           minLength: 10,
           maxLength: 100,
           pattern: "^[a-zA-Z0-9ก-๛./:]*$",
@@ -388,6 +406,13 @@ UserController.put(
             maxLength: "Profile Image Url should have at most 100 characters",
           },
           description: "Profile Image Url should have 10-100 characters",
+        })
+      ),
+      shop_verified: t.Optional(
+        t.Enum(Shop_status, {
+          error: {
+            invalid: "Shop verified should be PENDING, APPROVED, or REJECTED",
+          },
         })
       ),
     }),

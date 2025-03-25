@@ -55,6 +55,24 @@ ShopController.get(
 );
 
 ShopController.get(
+  "/getAllCategories/:shop_id",
+  async ({ params: { shop_id } }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.getAllCategories(shop_id);
+    return shop;
+  },
+  {
+    params: t.Object({
+      shop_id: t.Number(),
+    }),
+    detail: {
+      summary: "Get all Categories",
+      description: "Get all Categories in database",
+    },
+  }
+);
+
+ShopController.get(
   "/get/:id/detail",
   async ({ params: { id } }) => {
     const shopRepository = new ShopRepository();
@@ -68,6 +86,24 @@ ShopController.get(
     detail: {
       summary: "get Shop by id with all detail",
       description: "Get Shop by id in database with all detail",
+    },
+  }
+);
+
+ShopController.get(
+  "/getByUserId/:user_id",
+  async ({ params: { user_id } }) => {
+    const shopRepository = new ShopRepository();
+    const shop = await shopRepository.getShopsByUserId(user_id);
+    return shop;
+  },
+  {
+    params: t.Object({
+      user_id: t.String(),
+    }),
+    detail: {
+      summary: "Get the belong shops by user id ",
+      description: "Get the belong shops by user id in database",
     },
   }
 );
@@ -88,10 +124,28 @@ ShopController.post(
   {
     body: t.Object({
       user_id: t.String(),
-      name: t.String(),
-      description: t.String(),
-      open_time: t.Date(),
-      close_time: t.Date(),
+      name: t.String({
+        minLength: 1,
+        maxLength: 255,
+        pattern: "^[a-zA-Z0-9 ']*$",
+        error: '{"error" : "Name must be a string and not empty"}',
+        description: "Name must be a string and not empty",
+      }),
+      description: t.String({
+        minLength: 1,
+        maxLength: 255,
+        pattern: "^[a-zA-Z0-9 ']*$",
+        error: '{"error" : "Description must be a string and not empty"}',
+        description: "Description must be a string and not empty",
+      }),
+      open_time: t.Date({
+        error: '{"error" : "Open time must be a date"}',
+        description: "Open time must be a date",
+      }),
+      close_time: t.Date({
+        error: '{"error" : "Close time must be a date"}',
+        description: "Close time must be a date",
+      }),
     }),
     detail: {
       summary: "Create Shop",
@@ -218,11 +272,36 @@ ShopController.post(
     body: t.Object({
       shop_id: t.Number(),
       category_id: t.Optional(t.Number()),
-      name: t.String(),
-      price: t.Number(),
-      amount: t.Number(),
-      description: t.String(),
-      image_url: t.String(),
+      name: t.String({
+        minLength: 1, 
+        maxLength: 255,
+        pattern: "^[a-zA-Z0-9 ']*$",
+        error: '{"error" : "Name must be a string and not empty"}',
+        description: "Name must be a string and not empty",
+      }),
+      price: t.Number({
+        minimum:  0,
+        error: '{"error" : "Price must be a number and greater than 0"}',
+        description: "Price must be a number and greater than 0",
+      }),
+      amount: t.Number({
+        minimum: 0,
+        error: '{"error" : "Amount must be a number and greater than 0"}',
+        description: "Amount must be a number and greater than 0",
+      }), 
+      description: t.String({
+        minLength: 1,
+        maxLength: 255,
+        pattern: "^[a-zA-Z0-9 ']*$",
+        error: '{"error" : "Description must be a string and not empty"}',
+        description: "Description must be a string and not empty",
+      }),
+      image_url: t.String({
+        minLength: 1,
+        maxLength: 255,
+        error: '{"error" : "Image URL must be a string and not empty"}',
+        description: "Image URL must be a string and not empty",
+      }),
     }),
     detail: {
       summary: "Add Product",

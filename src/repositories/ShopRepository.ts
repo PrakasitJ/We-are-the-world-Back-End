@@ -1,4 +1,4 @@
-import { Bank_account, Product, Shop, Shop_images, User } from "@prisma/client";
+import { Bank_account, Product, Product_category, Shop, Shop_images, User } from "@prisma/client";
 import db from "./Database";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
@@ -14,6 +14,19 @@ interface ShopWithImage extends Partial<Shop> {
 }
 
 class ShopRepository {
+  public async getAllCategories(shop_id: number): Promise<Product_category[]> {
+    return await db.product_category.findMany(
+      {
+        distinct: ['category_name'],
+        where: {
+          shop: {
+            id: shop_id
+          }
+        }
+      }
+    );
+  }
+
   public async getShopById(id: number): Promise<Shop | null> {
     //Make Request to Database and return Shop
     return await db.shop.findUnique({
@@ -51,6 +64,7 @@ class ShopRepository {
         Shop_images: true,
         Product: {
           select: {
+            id: true,
             name: true,
             price: true,
             amount: true,
@@ -152,6 +166,17 @@ class ShopRepository {
       //Handle Unknown Error
       throw new Error("Internal Server Error");
     }
+  }
+
+  public async getShopsByUserId(user_id: string): Promise<Shop[]> {
+    return await db.shop.findMany({
+      where: {
+        user_id: user_id,
+      },
+      include: {
+        Shop_images: true
+      },
+    });
   }
 
   public async addShopImage({

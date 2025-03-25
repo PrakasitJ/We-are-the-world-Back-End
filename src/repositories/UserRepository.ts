@@ -1,4 +1,4 @@
-import { Prisma, User } from "@prisma/client";
+import { Prisma, Shop_status, User } from "@prisma/client";
 import db from "./Database";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
@@ -20,6 +20,12 @@ class UserRepository {
             email: username,
           },
         ],
+      },
+      include: {
+        Shop: true,
+        Charity: true,
+        Admin: true,
+        Rider: true,
       },
     });
   }
@@ -122,6 +128,7 @@ class UserRepository {
       tel?: string;
       password?: string;
       profile_image_url?: string;
+      shop_verified?: Shop_status;
     };
   }): Promise<User> {
     try {
@@ -156,6 +163,22 @@ class UserRepository {
         }
       }
       //Handle Unknown Error
+      throw new Error("Internal Server Error");
+    }
+  }
+
+  public async registerToBeShop(user_id: string): Promise<User> {
+    try {
+      //Make Request to Database and return User
+      const response = await db.user.update({
+        where: { uuid: user_id },
+        data: {
+          shop_verified: "PENDING",
+        },
+      });
+      return response;
+    } catch (error) {
+      //Handle Error from Database
       throw new Error("Internal Server Error");
     }
   }

@@ -10,6 +10,7 @@ model User {
   profile_image_url String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  shop_verified     Shop_status @default(NOT_REGISTERED)
 
   Admin   Admin?
   Charity Charity?
@@ -18,4 +19,11 @@ model User {
   Order   Order[]
 
   User_location User_location[]
+}
+
+enum Shop_status {
+  NOT_REGISTERED
+  PENDING
+  APPROVED
+  REJECTED
 }

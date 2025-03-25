@@ -96,6 +96,7 @@ const user_with_shop_and_charity = await db.user.create({
     surname: "Koiruk",
     tel: "0813541179",
     salt: "asdfghjkl",
+    shop_verified: "APPROVED",
     profile_image_url:
       "https://i.pinimg.com/736x/6a/d7/2f/6ad72f2370b68be1f06b4463d8aec8df.jpg",
 
@@ -132,11 +133,11 @@ const user_with_shop_and_charity = await db.user.create({
             data: [
               {
                 image_url:
-                  "https://scontent.fbkk10-1.fna.fbcdn.net/v/t39.30808-6/465105736_1022357336359058_523408579898380194_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGYNpHqAnLq8Gx_KJ7qAlkVGUzidiMNM4sZTOJ2Iw0zi3Zv1vhEkjKgIV43pb7NkQIdvWJSpZYlbtVMGuLt0Ok0&_nc_ohc=iiwdvFxl8GcQ7kNvgFHs-Um&_nc_oc=AdiFR5_OlvKSztMVQnCpXFIdbVPqBS7bzRMjQFHR3yLfiObWJ-jbxiL0MaMw4dzhgE0&_nc_zt=23&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=fLGG9hMDTILrCMRzHWupRg&oh=00_AYHRdZ5HitJeOPLoj8AssyQKhYPe5Glr9PE7ztUdV9naFg&oe=67D99197",
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNoj6SLy72uDDPuSJf54jUjHcSZh-JVcki6g&s",
               },
               {
                 image_url:
-                  "https://scontent.fbkk10-1.fna.fbcdn.net/v/t39.30808-6/481904576_1110578927536898_3670329083035134541_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeEC190vSFFb7bX4p8K-IGnpVT7E0h7qUMBVPsTSHupQwJ35X6pAytx3uLgmk45PSEeu1Ow_v25bK7k9EGYZWQQS&_nc_ohc=537BLcPjxKkQ7kNvgFxtQlH&_nc_oc=AdgrJaxFVvp1ZZeg0LLM9ii5pTc--8WMxR9MoR8Iudq5XcTIE3INPQfhzvXaGpLiQLA&_nc_zt=23&_nc_ht=scontent.fbkk10-1.fna&_nc_gid=AZZ6Ea9NzYBmLhViJ-4uwMx&oh=00_AYFGRU69WHPMkYIHgH8OgB9P_diMtq7jU_P1CttAFeJzrg&oe=67D9A250",
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYyka_2hiD2N4XlmXpZ9TnXhSOvd4BXrSoVA&s",
               },
             ],
           },
