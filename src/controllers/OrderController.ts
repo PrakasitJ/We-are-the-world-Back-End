@@ -115,6 +115,7 @@ OrderController.post(
       note: t.String({
         minLength: 1,
         error: "Note must be a string and not empty string",
+        pattern: "^[a-zA-Zก-๛ ]*$",
       }),
     }),
     detail: {

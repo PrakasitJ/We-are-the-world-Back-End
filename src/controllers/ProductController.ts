@@ -100,7 +100,7 @@ ProductController.post(
 			name : t.String({
 				minLength: 2,
 				maxLength: 20,
-				pattern: "^[a-zA-Z]*$",
+				pattern: "^[a-zA-Zก-๛]*$",
 				error: {
 					minLength: "Name should have at least 2 characters",
 					maxLength: "Name should have at most 20 characters",
@@ -115,6 +115,7 @@ ProductController.post(
 				error: {
 					maxLength: "Name should have at most 50 characters",
 				},
+				pattern: "^[a-zA-Zก-๛ ]*$",
 				description: "Desciption should have at most 50 characters",
 			}),
 		}),
@@ -140,7 +141,7 @@ ProductController.put(
 			name : t.Optional(t.String({
 				minLength: 2,
 				maxLength: 20,
-				pattern: "^[a-zA-Z]*$",
+				pattern: "^[a-zA-Zก-๛]*$",
 				error: {
 					minLength: "Name should have at least 2 characters",
 					maxLength: "Name should have at most 20 characters",
@@ -155,6 +156,7 @@ ProductController.put(
 				error: {
 					maxLength: "Name should have at most 50 characters",
 				},
+				pattern: "^[a-zA-Zก-๛ ]*$",
 				description: "Desciption should have at most 50 characters",
 			})),
 			createdAt : t.Optional(t.Date()),

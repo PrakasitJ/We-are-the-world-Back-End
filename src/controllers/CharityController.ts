@@ -114,7 +114,9 @@ CharityController.post(
   {
     body: t.Object({
       user_id: t.String(),
-      name: t.String(),
+      name: t.String({
+        pattern: "^[a-zA-Zก-๛ ]*$",
+      }),
       description: t.String(),
       open_time: t.Date(),
       close_time: t.Date(),
@@ -179,7 +181,9 @@ CharityController.put(
       id: t.Number(),
       charity: t.Object({
         user_id: t.String(),
-        name: t.String(),
+        name: t.String({
+          pattern: "^[a-zA-Zก-๛ ]*$",
+        }),
         description: t.String(),
         open_time: t.Date(),
         close_time: t.Date(),

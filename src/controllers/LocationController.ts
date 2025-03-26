@@ -49,7 +49,9 @@ LocationController.post(
     {
         body: t.Object({
             user_id: t.String(),
-            address: t.Optional(t.String()),
+            address: t.Optional(t.String({
+                pattern: "^[a-zA-Zก-๛ ]*$",
+            })),
             latitude: t.Number(),
             longitude: t.Number(),
         }),

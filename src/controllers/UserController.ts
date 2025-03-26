@@ -201,6 +201,7 @@ UserController.post(
         },
         description:
           "Username should have no whitespace and have 2-30 characters",
+        pattern: "^[a-zA-Zก-๛]*$",
       }),
       email: t.String({
         // Define email parameter
@@ -233,7 +234,7 @@ UserController.post(
         // Define name parameter
         minLength: 2,
         maxLength: 15,
-        pattern: "^[a-zA-Z]*$",
+        pattern: "^[a-zA-Zก-๛]*$",
         error: {
           minLength: "Name should have at least 2 characters",
           maxLength: "Name should have at most 15 characters",
@@ -245,7 +246,7 @@ UserController.post(
         // Define surname parameter
         minLength: 2,
         maxLength: 15,
-        pattern: "^[a-zA-Z]*$",
+        pattern: "^[a-zA-Zก-๛]*$",
         error: {
           minLength: "Surname should have at least 2 characters",
           maxLength: "Surname should have at most 15 characters",
@@ -323,6 +324,7 @@ UserController.put(
           },
           description:
             "Username should have no whitespace and have 2-30 characters",
+          pattern: "^[a-zA-Zก-๛]*$",
         })
       ),
       email: t.Optional(
@@ -360,7 +362,7 @@ UserController.put(
         t.String({
           minLength: 2,
           maxLength: 15,
-          pattern: "^[a-zA-Z]*$",
+          pattern: "^[a-zA-Zก-๛]*$",
           error: {
             minLength: "Name should have at least 2 characters",
             maxLength: "Name should have at most 15 characters",
@@ -374,7 +376,7 @@ UserController.put(
           // Define surname parameter
           minLength: 2,
           maxLength: 15,
-          pattern: "^[a-zA-Z]*$",
+          pattern: "^[a-zA-Zก-๛]*$",
           error: {
             minLength: "Surname should have at least 2 characters",
             maxLength: "Surname should have at most 15 characters",

@@ -96,7 +96,7 @@ ProductCategoryController.post(
 			category_name : t.String({
 				minLength: 2,
 				maxLength: 30,
-				pattern : "^[a-zA-Z]*$",
+				pattern : "^[a-zA-Zก-๛]*$",
 				error : {
 					minLength : "Name should have at least 2 characters",
 					maxLength : "Name should have at most 30 characters",
@@ -126,7 +126,7 @@ ProductCategoryController.put(
 			category_name : t.String({
 				minLength: 2,
 				maxLength: 30,
-				pattern : "^[a-zA-Z]*$",
+				pattern : "^[a-zA-Zก-๛]*$",
 				error : {
 					minLength : "Name should have at least 2 characters",
 					maxLength : "Name should have at most 30 characters",

@@ -93,7 +93,7 @@ BankAccountController.post(
         description: "Bank account must be number with 10 characters long",
       }),
       account_holder_name: t.String({
-        pattern: "^[a-zA-Z ]*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         minLength: 4,
         maxLength: 50,
         error: {
@@ -150,7 +150,7 @@ BankAccountController.put(
       ),
       account_holder_name: t.Optional(
         t.String({
-          pattern: "^[a-zA-Z ]*$",
+          pattern: "^[a-zA-Zก-๛ ]*$",
           minLength: 4,
           maxLength: 50,
           error: {

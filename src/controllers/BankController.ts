@@ -59,7 +59,11 @@ BankController.post(
     return bank;
   },
   {
-    body: t.Object({ name: t.String() }),
+    body: t.Object({
+      name: t.String({
+        pattern: "^[a-zA-Zก-๛ ]*$",
+      }),
+    }),
     detail: {
       summary: "Create Bank",
       description: "Create Bank in database",

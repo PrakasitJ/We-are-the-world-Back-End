@@ -127,14 +127,14 @@ ShopController.post(
       name: t.String({
         minLength: 1,
         maxLength: 255,
-        pattern: "^[a-zA-Z0-9 ']*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         error: '{"error" : "Name must be a string and not empty"}',
         description: "Name must be a string and not empty",
       }),
       description: t.String({
         minLength: 1,
         maxLength: 255,
-        pattern: "^[a-zA-Z0-9 ']*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         error: '{"error" : "Description must be a string and not empty"}',
         description: "Description must be a string and not empty",
       }),
@@ -185,7 +185,7 @@ ShopController.post(
       account_holder_name: t.String({
         minLength: 1,
         maxLength: 255,
-        pattern: "^[a-zA-Z ]*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         error: "Account Holder Name must be a string and not empty",
         description: "Account Holder Name must be a string and not empty",
       }),
@@ -275,7 +275,7 @@ ShopController.post(
       name: t.String({
         minLength: 1, 
         maxLength: 255,
-        pattern: "^[a-zA-Z0-9 ']*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         error: '{"error" : "Name must be a string and not empty"}',
         description: "Name must be a string and not empty",
       }),
@@ -292,7 +292,7 @@ ShopController.post(
       description: t.String({
         minLength: 1,
         maxLength: 255,
-        pattern: "^[a-zA-Z0-9 ']*$",
+        pattern: "^[a-zA-Zก-๛ ]*$",
         error: '{"error" : "Description must be a string and not empty"}',
         description: "Description must be a string and not empty",
       }),
