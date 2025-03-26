@@ -105,18 +105,20 @@ ProductController.post(
 					minLength: "Name should have at least 2 characters",
 					maxLength: "Name should have at most 20 characters",
 				},
-				description: "Name should have at least 2 characters and at most 15 characters",
+				description: "Name should have at least 2 characters and at most 20 characters",
 			}),
 			price : t.Number(),
 			amount : t.Number(),
 			image_url : t.String(),
 			description : t.String({
-				maxLength:50,
+				minLength: 2,
+				maxLength:500,
 				error: {
-					maxLength: "Name should have at most 50 characters",
+					minLength: "Description should have at least 2 characters",
+					maxLength: "Description should have at most 500 characters",
 				},
-				pattern: "^[a-zA-Zก-๛ ]*$",
-				description: "Desciption should have at most 50 characters",
+				// pattern: "^[a-zA-Zก-๛ '-]*$",
+				description: "Desciption should have at most 500 characters",
 			}),
 		}),
 		detail : {
@@ -141,7 +143,7 @@ ProductController.put(
 			name : t.Optional(t.String({
 				minLength: 2,
 				maxLength: 20,
-				pattern: "^[a-zA-Zก-๛]*$",
+				pattern: "^[a-zA-Zก-๛ ]*$",
 				error: {
 					minLength: "Name should have at least 2 characters",
 					maxLength: "Name should have at most 20 characters",
@@ -152,12 +154,14 @@ ProductController.put(
 			amount : t.Optional(t.Number()),
 			image_url : t.Optional(t.String()),
 			description : t.Optional(t.String({
-				maxLength:50,
+				minLength: 2,
+				maxLength:500,
+				// pattern: "^[a-zA-Zก-๛ '-]*$",
 				error: {
-					maxLength: "Name should have at most 50 characters",
+					minLength: "Description should have at least 2 characters",
+					maxLength: "Description should have at most 500 characters",
 				},
-				pattern: "^[a-zA-Zก-๛ ]*$",
-				description: "Desciption should have at most 50 characters",
+				description: "Desciption should have at most 500 characters",
 			})),
 			createdAt : t.Optional(t.Date()),
 			updatedAt : t.Optional(t.Date()),
