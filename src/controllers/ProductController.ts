@@ -100,7 +100,7 @@ ProductController.post(
 			name : t.String({
 				minLength: 2,
 				maxLength: 20,
-				pattern: "^[a-zA-Zก-๛]*$",
+				pattern: "^[a-zA-Zก-๛ ]*$",
 				error: {
 					minLength: "Name should have at least 2 characters",
 					maxLength: "Name should have at most 20 characters",
