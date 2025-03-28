@@ -3,7 +3,7 @@ model User_location {
     user_id   String   @db.Uuid
     latitude  Float    @default(0)
     longitude Float    @default(0)
-    address   String   @default("Please update your address") @db.VarChar(100)
+    address   String   @default("Please update your address") @db.Text
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
